@@ -1,0 +1,201 @@
+.screen-category {
+  --page-color-start: #f0eafa;
+  --page-color-end: #f4e5ef;
+
+  overflow-y: auto;
+}
+
+.category-body {
+  justify-content: flex-start;
+  gap: 14px;
+}
+
+.cat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon-back {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+
+  border: none;
+  background: var(--card);
+
+  color: var(--ink);
+  font-size: 19px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  box-shadow: 0 6px 16px rgba(128, 101, 199, 0.12);
+}
+
+.cat-header-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.cat-title {
+  font-size: 26px;
+}
+
+.cat-subtitle {
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+/* ===== shared card ===== */
+
+.cat-card {
+  background: var(--card);
+  border-radius: var(--radius-md);
+  padding: 18px;
+
+  box-shadow: 0 8px 22px rgba(128, 101, 199, 0.08);
+}
+
+.cat-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 10px;
+  text-align: center;
+
+  padding: 30px 18px;
+}
+
+.cat-text p {
+  color: var(--ink);
+  font-size: 14.5px;
+  line-height: 1.7;
+}
+
+.cat-load-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  padding: 30px 18px;
+}
+
+.cat-load-error .status-icon {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.cat-load-error p {
+  font-size: 13.5px;
+}
+
+.cat-load-error .btn-primary {
+  width: min(80%, 240px);
+  min-height: 44px;
+}
+
+/* ===== paywall ===== */
+
+.paywall-card {
+  position: relative;
+  overflow: hidden;
+
+  padding-bottom: 26px;
+}
+
+.paywall-blur-line {
+  height: 12px;
+  border-radius: 6px;
+
+  margin: 10px 0;
+
+  background: var(--field-bg);
+
+  filter: blur(2px);
+  opacity: 0.8;
+}
+
+.paywall-blur-line.short {
+  width: 65%;
+}
+
+.paywall-cta {
+  margin-top: 18px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 8px;
+
+  text-align: center;
+}
+
+.paywall-lock {
+  font-size: 22px;
+}
+
+.paywall-hint {
+  font-size: 13px;
+  color: var(--ink-soft);
+  max-width: 240px;
+}
+
+.paywall-cta .btn-primary {
+  width: auto;
+  padding-left: 26px;
+  padding-right: 26px;
+
+  margin-top: 4px;
+}
+
+.paywall-cta .btn-primary:disabled {
+  opacity: 0.6;
+}
+
+.paywall-error {
+  font-size: 12px;
+  color: var(--danger, #d1435b);
+  max-width: 240px;
+}
+
+.paywall-soon {
+  font-size: 12px;
+  color: var(--ink-soft);
+  max-width: 240px;
+}
+
+
+/* ===== ДЕМО: подпись под кнопкой оплаты ===== */
+
+.demo-paywall-note {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+
+  max-width: 250px;
+}
+
+.demo-paywall-note p {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.demo-paywall-note a {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--lavender);
+  text-decoration: none;
+}
+
+.demo-paywall-note a:hover {
+  text-decoration: underline;
+}

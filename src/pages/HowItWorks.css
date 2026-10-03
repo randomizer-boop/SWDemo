@@ -1,0 +1,157 @@
+.hiw-title {
+  max-width: 320px;
+
+  margin: 0 auto 6px;
+
+  font-size: clamp(27px, 8vw, 34px);
+
+  line-height: 1.05;
+
+  text-align: center;
+}
+
+.hiw-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+
+  margin-top: 14px;
+}
+
+/* Step card: large faint number behind, badge + text in front */
+
+.hiw-card {
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 14px;
+
+  padding: 18px;
+
+  background: var(--card);
+
+  border: 1px solid rgba(37, 27, 61, 0.06);
+  border-radius: var(--radius-md);
+
+  box-shadow: 0 12px 26px rgba(37, 27, 61, 0.06);
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.hiw-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 15px 30px rgba(37, 27, 61, 0.09);
+}
+
+.hiw-ghost-number {
+  position: absolute;
+  top: -22px;
+  right: -4px;
+
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(64px, 20vw, 88px);
+  line-height: 1;
+
+  z-index: 0;
+
+  user-select: none;
+}
+
+.hiw-card-lavender .hiw-ghost-number { color: rgba(128, 101, 199, 0.1); }
+.hiw-card-rose .hiw-ghost-number { color: rgba(201, 121, 155, 0.12); }
+.hiw-card-sky .hiw-ghost-number { color: rgba(91, 147, 168, 0.12); }
+
+.hiw-badge {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  border-radius: 999px;
+
+  color: #ffffff;
+
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.hiw-badge-lavender {
+  background: var(--lavender);
+  box-shadow: 0 8px 16px rgba(128, 101, 199, 0.35);
+}
+
+.hiw-badge-rose {
+  background: #c9799b;
+  box-shadow: 0 8px 16px rgba(201, 121, 155, 0.35);
+}
+
+.hiw-badge-sky {
+  background: #5b93a8;
+  box-shadow: 0 8px 16px rgba(91, 147, 168, 0.35);
+}
+
+.hiw-content {
+  position: relative;
+  z-index: 1;
+
+  flex: 1;
+
+  padding-top: 2px;
+
+  text-align: left;
+}
+
+.hiw-step-title {
+  color: var(--ink);
+
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-style: normal;
+
+  font-size: 19px;
+  line-height: 1.2;
+}
+
+.hiw-step-text {
+  max-width: 230px;
+
+  margin-top: 5px;
+
+  color: var(--ink-soft);
+
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 0.005em;
+
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+@media (max-height: 700px) {
+  .hiw-list {
+    gap: 9px;
+
+    margin-top: 10px;
+  }
+
+  .hiw-card {
+    padding: 14px;
+  }
+}

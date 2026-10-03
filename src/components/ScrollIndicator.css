@@ -1,0 +1,27 @@
+/* Индикатор скролла (см. ScrollIndicator.jsx) */
+
+.scroll-indicator {
+  position: fixed;
+  right: 4px;
+  width: 3px;
+
+  border-radius: 999px;
+  background: var(--lavender);
+
+  opacity: 0;
+  pointer-events: none;
+
+  z-index: 60;
+
+  transition: opacity 260ms ease;
+}
+
+.scroll-indicator.is-visible {
+  opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-indicator {
+    transition: none;
+  }
+}

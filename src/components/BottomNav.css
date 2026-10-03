@@ -1,0 +1,62 @@
+.bottom-nav {
+  /* Панель всегда на экране, независимо от скролла */
+  position: fixed;
+  bottom: calc(10px + var(--safe-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+
+  /* Ширина окна минус боковые отступы (18px × 2) */
+  width: min(calc(100% - 36px), 390px);
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  background: var(--card);
+  border-radius: 999px;
+
+  padding: 10px 6px;
+
+  border: 1px solid rgba(128, 101, 199, 0.14);
+
+  box-shadow:
+    0 16px 34px rgba(60, 40, 90, 0.22),
+    0 3px 10px rgba(60, 40, 90, 0.1);
+
+  z-index: 40;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 3px;
+
+  min-width: 56px;
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  color: var(--ink-soft);
+
+  font-family: var(--font-body);
+  font-size: 9.5px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: color 160ms ease;
+}
+
+.nav-item .nav-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.nav-item.active,
+.nav-item.active .nav-icon {
+  color: var(--lavender);
+}

@@ -1,0 +1,56 @@
+.screen-status {
+  --page-color-start: #f0eafa;
+  --page-color-end: #f4e5ef;
+}
+
+.status-center {
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+}
+
+.status-center .btn-primary,
+.status-center .btn-ghost {
+  width: min(80%, 264px);
+}
+
+.status-icon {
+  font-size: 40px;
+  line-height: 1;
+}
+
+.status-title {
+  max-width: 300px;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.status-text {
+  max-width: 290px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+/* ===== spinner (loading state) ===== */
+
+.status-spinner {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 3px solid rgba(128, 101, 199, 0.18);
+  border-top-color: var(--lavender);
+  animation: status-spin 800ms linear infinite;
+}
+
+@keyframes status-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-spinner {
+    animation: none;
+  }
+}

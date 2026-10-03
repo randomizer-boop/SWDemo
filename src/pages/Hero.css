@@ -1,0 +1,161 @@
+.screen-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Мягкая фактура без точек: почти незаметная бумажная сетка. */
+.screen-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(115deg, rgba(255,255,255,0.22), transparent 38%, rgba(128,101,199,0.035) 76%, transparent),
+    repeating-linear-gradient(0deg, rgba(128,101,199,0.018) 0, rgba(128,101,199,0.018) 1px, transparent 1px, transparent 7px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 9px);
+  background-size: auto, auto, auto;
+  mix-blend-mode: multiply;
+  opacity: 0.72;
+}
+
+.hero-body {
+  align-items: center;
+
+  text-align: center;
+
+  gap: 18px;
+}
+
+/* ===== декоративная сцена: звёзды и планеты ===== */
+
+.hero-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(0.5px);
+}
+
+.hero-orb-a {
+  top: 6%;
+  right: -14%;
+  width: 190px;
+  height: 190px;
+  background: radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.9), rgba(198, 149, 201, 0.55) 45%, rgba(128, 101, 199, 0.18) 72%, transparent 78%);
+}
+
+.hero-orb-b {
+  bottom: 12%;
+  left: -16%;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle at 30% 28%, rgba(255, 255, 255, 0.85), rgba(128, 101, 199, 0.35) 50%, transparent 76%);
+}
+
+.hero-orb-c {
+  top: 46%;
+  left: 6%;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #fff, #c398c9 70%, transparent 100%);
+  opacity: 0.6;
+}
+
+.hero-orb-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 128%;
+  height: 34%;
+  border: 1px solid rgba(128, 101, 199, 0.35);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(-18deg);
+}
+
+/* Имя сервиса рядом со спарком */
+.brand-mark {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #6a4fb0;
+}
+
+.hero-title {
+  max-width: 350px;
+
+  font-size: clamp(43px, 12vw, 58px);
+
+  line-height: 0.98;
+
+  letter-spacing: -0.035em;
+}
+
+.hero-title span {
+  color: #6a4fb0;
+  font-style: italic;
+}
+
+/* EN: заголовок в две короткие строки — чуть больше воздуха между ними */
+html[lang="en"] .hero-title {
+  line-height: 1.16;
+}
+
+.hero-subtitle {
+  max-width: 310px;
+
+  color: var(--ink-soft);
+
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+/* Строка согласия — у нижнего края экрана, в его нижнем отступе */
+.hero-legal {
+  position: absolute;
+  left: 50%;
+  bottom: calc(14px + var(--safe-bottom));
+  z-index: 2;
+
+  width: min(calc(100% - 36px), 390px);
+  transform: translateX(-50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.hero-legal .legal-note,
+.hero-legal .legal-links {
+  font-size: 9.5px;
+  line-height: 1.4;
+}
+
+.hero-legal .legal-links button {
+  padding: 2px 0;
+}
+
+@media (max-width: 380px) {
+  .hero-title {
+    font-size: 40px;
+  }
+
+  .hero-subtitle {
+    font-size: 13.5px;
+  }
+}

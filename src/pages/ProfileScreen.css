@@ -1,0 +1,354 @@
+/* ===== profile screen ===== */
+
+.screen-profile {
+  --page-color-start: #f6eefb;
+  --page-color-end: #eee0f6;
+  overflow-y: auto;
+  /* Место под фиксированную нижнюю навигацию */
+  padding-bottom: calc(var(--bottom-nav-clearance) + var(--safe-bottom));
+}
+
+.profile-body {
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.profile-header .hello {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+
+.profile-header h1 {
+  font-size: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pf-avatar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, var(--lavender), #a68ee0);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  box-shadow: 0 8px 18px rgba(128, 101, 199, 0.28);
+}
+
+/* ===== birth data card ===== */
+
+.pf-card {
+  padding: 14px 14px 12px;
+  border-radius: var(--radius-md);
+  background: var(--card);
+  box-shadow: 0 10px 28px rgba(76, 55, 111, 0.09);
+}
+
+.pf-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.pf-card-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  color: var(--ink-soft);
+}
+
+/* Кнопка-пилюля "Изменить данные" (как на Home) */
+.pf-card-head .edit-data-button {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid rgba(128, 101, 199, 0.28);
+  border-radius: 999px;
+  background: rgba(128, 101, 199, 0.09);
+  padding: 6px 12px;
+  color: var(--lavender);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.1;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.pf-card-head .edit-data-button::before {
+  content: "✎";
+  font-size: 10px;
+}
+
+.pf-card-head .edit-data-button:active {
+  transform: scale(0.96);
+  background: rgba(128, 101, 199, 0.16);
+}
+
+.pf-data-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 14px;
+}
+
+.pf-data-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  /* min-width: 0 — чтобы длинное значение обрезалось многоточием */
+  min-width: 0;
+}
+
+.pf-data-row span {
+  font-size: 9.5px;
+  color: var(--ink-soft);
+}
+
+.pf-data-row strong {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ===== purchases / categories list ===== */
+
+.pf-purchase-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pf-purchase-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  background: var(--card);
+  border-radius: var(--radius-sm);
+  padding: 11px 12px;
+  box-shadow: 0 6px 16px rgba(128, 101, 199, 0.07);
+  transition: transform 160ms ease;
+}
+
+.pf-purchase-row:active {
+  transform: scale(0.99);
+}
+
+.pf-purchase-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.pf-purchase-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pf-purchase-price {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--lavender);
+}
+
+/* ===== restore purchases ===== */
+
+.pf-restore-link {
+  display: block;
+  margin: 10px auto 0;
+  border: none;
+  background: none;
+  color: var(--lavender);
+  font: inherit;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  padding: 6px 4px;
+}
+
+.pf-restore-link:disabled {
+  color: var(--ink-faint);
+  cursor: default;
+}
+
+/* ===== share card ===== */
+
+.pf-share-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  border: 1px solid rgba(128, 101, 199, 0.16);
+  text-align: left;
+  cursor: pointer;
+  background: linear-gradient(
+    135deg,
+    rgba(128, 101, 199, 0.1),
+    rgba(242, 223, 232, 0.45)
+  );
+  border-radius: var(--radius-md);
+  padding: 14px;
+  transition: transform 160ms ease;
+}
+
+.pf-share-card:active {
+  transform: scale(0.99);
+}
+
+.pf-share-icon {
+  flex-shrink: 0;
+  font-size: 19px;
+  color: var(--lavender);
+}
+
+.pf-share-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pf-share-body strong {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.pf-share-body span {
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+.pf-share-arrow {
+  flex-shrink: 0;
+  color: var(--ink-faint);
+  font-size: 18px;
+}
+
+/* ===== support / faq ===== */
+
+.pf-faq-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.pf-faq-item {
+  padding: 10px 2px;
+  border-bottom: 1px solid rgba(128, 101, 199, 0.1);
+}
+
+.pf-faq-item:last-child {
+  border-bottom: none;
+}
+
+.pf-faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+}
+
+.pf-faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.pf-faq-item summary::after {
+  content: "+";
+  flex-shrink: 0;
+  color: var(--lavender);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.pf-faq-item[open] summary::after {
+  content: "–";
+}
+
+.pf-faq-item p {
+  margin-top: 6px;
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+
+.pf-support-button {
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid rgba(128, 101, 199, 0.28);
+  border-radius: var(--radius-sm);
+  background: rgba(128, 101, 199, 0.06);
+  padding: 11px;
+  color: var(--lavender);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.pf-support-button:active {
+  transform: scale(0.98);
+  background: rgba(128, 101, 199, 0.12);
+}
+
+/* ===== footnote / version ===== */
+
+.pf-footnote {
+  margin: 2px 4px 0;
+  font-size: 10.5px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.pf-version {
+  margin: -8px 4px 0;
+  font-size: 9.5px;
+  color: var(--ink-faint);
+  text-align: center;
+}

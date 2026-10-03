@@ -1,0 +1,341 @@
+/* Десктопная страница демо: описание + приложение в рамке телефона */
+
+.demo-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 16px 40px;
+
+  background:
+    radial-gradient(circle at 85% 10%, rgba(255, 255, 255, 0.8), transparent 40%),
+    linear-gradient(145deg, #f8f3fd 0%, #e9def7 55%, #f4e5ef 100%);
+}
+
+.demo-shell-inner {
+  width: min(100%, 1080px);
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 64px;
+}
+
+/* ===== левая колонка ===== */
+
+.demo-info {
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  padding: 8px 0;
+}
+
+.demo-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* ===== переключатель языка ===== */
+
+.lang-switch {
+  display: inline-flex;
+  padding: 3px;
+
+  border-radius: 999px;
+  border: 1px solid rgba(128, 101, 199, 0.25);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.lang-switch button {
+  min-width: 40px;
+  padding: 5px 10px;
+
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.lang-switch button.is-active {
+  background: var(--lavender);
+  color: #fff;
+}
+
+.lang-switch-dark {
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.lang-switch-dark button {
+  min-width: 32px;
+  padding: 3px 7px;
+  font-size: 11px;
+  color: #d9ccf5;
+}
+
+.lang-switch-dark button.is-active {
+  background: #fff;
+  color: var(--ink);
+}
+
+.demo-eyebrow {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lavender);
+}
+
+.demo-title {
+  font-size: 52px;
+  line-height: 1;
+}
+
+.demo-lead {
+  font-size: 16.5px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.demo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 4px 0 6px;
+}
+
+.demo-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 46px;
+  padding: 0 22px;
+
+  border-radius: 999px;
+  border: none;
+
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  font-weight: 700;
+  text-decoration: none;
+
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+}
+
+.demo-btn:hover {
+  transform: translateY(-1px);
+}
+
+.demo-btn-primary {
+  background: var(--lavender);
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(128, 101, 199, 0.32);
+}
+
+.demo-btn-ghost {
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--ink);
+  border: 1px solid rgba(128, 101, 199, 0.25);
+}
+
+.demo-btn-ghost:hover {
+  background: #fff;
+}
+
+.demo-block h2 {
+  margin-bottom: 8px;
+
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.demo-block ul {
+  margin: 0;
+  padding-left: 18px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.demo-block li::marker {
+  color: var(--lavender);
+}
+
+.demo-chips,
+.demo-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.demo-chip {
+  padding: 7px 13px;
+
+  border-radius: 999px;
+  border: 1px solid rgba(128, 101, 199, 0.28);
+  background: rgba(255, 255, 255, 0.75);
+
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+.demo-chip:hover {
+  background: #fff;
+  border-color: var(--lavender);
+}
+
+.demo-stack span {
+  padding: 5px 11px;
+
+  border-radius: 8px;
+  background: rgba(37, 27, 61, 0.06);
+
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+/* ===== рамка телефона ===== */
+
+/* Размеры рамки и масштаб экрана задаёт DemoShell.jsx (под высоту окна) */
+
+.demo-phone-wrap {
+  display: flex;
+  justify-content: center;
+
+  /* Если описание выше окна — телефон остаётся на экране при прокрутке */
+  align-self: start;
+  position: sticky;
+  top: 16px;
+}
+
+.demo-phone {
+  flex: none;
+  box-sizing: border-box;
+
+  background: var(--ink);
+
+  box-shadow:
+    0 40px 80px rgba(60, 40, 90, 0.28),
+    0 8px 20px rgba(60, 40, 90, 0.16);
+}
+
+.demo-phone-clip {
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+  background: var(--bg);
+
+  /* отдельный слой: скругление не теряется при прокрутке внутри iframe */
+  isolation: isolate;
+}
+
+.demo-phone-screen {
+  display: block;
+  border: none;
+  background: var(--bg);
+
+  transform-origin: 0 0;
+
+  /* Скругление самого экрана (в логических px, масштабируется вместе с ним) */
+  border-radius: 47px;
+  clip-path: inset(0 round 47px);
+}
+
+@media (max-width: 1040px) {
+  .demo-shell-inner {
+    gap: 36px;
+  }
+
+  .demo-title {
+    font-size: 44px;
+  }
+}
+
+/* ===== приложение внутри рамки: без системного скроллбара ===== */
+
+html.is-embedded {
+  scrollbar-width: none;
+}
+
+html.is-embedded::-webkit-scrollbar {
+  display: none;
+}
+
+/* ===== мобильная полоска "Демо" над приложением ===== */
+
+.demo-banner {
+  --demo-banner-h: 40px;
+
+  height: var(--demo-banner-h);
+  padding: 0 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  background: var(--ink);
+  color: #fff;
+
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.demo-banner-title {
+  white-space: nowrap;
+}
+
+.demo-banner-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.demo-banner-links > a,
+.demo-banner-links > button {
+  padding: 0;
+  border: none;
+  background: none;
+
+  font: inherit;
+  color: #d9ccf5;
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+/* Экраны приложения — на высоту окна минус полоска */
+.has-demo-banner .screen {
+  min-height: calc(100vh - 40px);
+  min-height: calc(100dvh - 40px);
+}

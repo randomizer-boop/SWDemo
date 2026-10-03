@@ -1,0 +1,525 @@
+/* ===== chart screen ===== */
+
+.screen-chart {
+  --page-color-start: #eef2fb;
+  --page-color-end: #eee0f6;
+  overflow-y: auto;
+  /* Место под фиксированную нижнюю навигацию */
+  padding-bottom: calc(var(--bottom-nav-clearance) + var(--safe-bottom));
+}
+
+.chart-body {
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+/* ===== header ===== */
+
+.cs-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cs-header .hello {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+
+.cs-header h1 {
+  font-size: 20px;
+}
+
+.cs-birth-line {
+  margin-top: 3px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--lavender);
+}
+
+/* ===== wheel ===== */
+
+.cs-wheel-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 4px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 10px 28px rgba(76, 55, 111, 0.09);
+}
+
+/* ===== ASC / MC / DSC strip ===== */
+
+.cs-axis-row {
+  display: flex;
+  justify-content: space-between;
+  background: var(--card);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  box-shadow: 0 8px 20px rgba(128, 101, 199, 0.07);
+}
+
+.cs-axis-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+
+.cs-axis-item + .cs-axis-item {
+  border-left: 1px solid #efeaf7;
+}
+
+.cs-axis-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--lavender);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cs-axis-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* ===== sections ===== */
+
+.cs-section {
+  padding-top: 17px;
+  border-top: 1px solid rgba(128, 101, 199, 0.16);
+}
+
+.cs-section:first-of-type {
+  border-top: 0;
+  padding-top: 2px;
+}
+
+.cs-section-title {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 24px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.cs-section-title h3 {
+  font-size: 16px;
+}
+
+.cs-section-title span {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10.5px;
+  color: var(--ink-soft);
+}
+
+/* короткая подсказка под заголовком раздела */
+.cs-section-hint {
+  margin: 0 0 11px;
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.cs-card {
+  background: var(--card);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  box-shadow: 0 7px 18px rgba(128, 101, 199, 0.07);
+}
+
+.cs-empty-state {
+  font-size: 13px;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.cs-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  padding: 40px 18px;
+  color: var(--ink-soft);
+}
+
+/* ===== planets — compact, collapsible list ===== */
+
+.cs-planet-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px 8px;
+}
+
+.cs-planet-cell {
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(128, 101, 199, 0.08);
+  border-radius: 12px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: none;
+}
+
+.cs-planet-cell-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cs-planet-cell-sub {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.cs-row-icon {
+  color: var(--lavender);
+  flex-shrink: 0;
+}
+
+.cs-row-name {
+  min-width: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cs-retro {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #f4dce5;
+  color: #b85a72;
+  font-size: 8px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.cs-row-sign {
+  min-width: 0;
+  font-size: 10px;
+  color: var(--ink-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cs-row-house {
+  flex-shrink: 0;
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+/* ===== houses — small, readable 2-column rows ===== */
+
+.cs-house-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 10px;
+  overflow: hidden;
+  border: 1px solid rgba(102, 153, 196, 0.18);
+  border-radius: 15px;
+  background: rgba(237, 246, 252, 0.68);
+}
+
+.cs-house-cell {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 27px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 5px 9px;
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.cs-house-cell:nth-child(n + 3) {
+  border-top: 1px solid rgba(102, 153, 196, 0.12);
+}
+
+.cs-house-cell:nth-child(odd) {
+  border-right: 1px solid rgba(102, 153, 196, 0.12);
+}
+
+.cs-house-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 22px;
+  border-radius: 8px;
+  background: #dbeaf6;
+  color: #5f95bc;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.cs-house-sign {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.cs-house-degree {
+  font-size: 9.5px;
+  color: #6f89a0;
+  white-space: nowrap;
+}
+
+/* ===== tables: aspects / configurations ===== */
+
+.cs-table {
+  background: var(--card);
+  border-radius: 15px;
+  box-shadow: 0 7px 18px rgba(128, 101, 199, 0.06);
+  overflow: hidden;
+}
+
+.cs-table-head,
+.cs-table-row {
+  display: grid;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 11px;
+}
+
+.cs-table-head {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+  padding-top: 10px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid #f1ecf9;
+}
+
+.cs-table-row {
+  font-size: 12px;
+  min-height: 39px;
+}
+
+.cs-table-row + .cs-table-row {
+  border-top: 1px solid #f1ecf9;
+}
+
+.cs-col-right {
+  text-align: right;
+}
+
+/* ===== aspect color legend — красный/жёлтый/зелёный = смысл аспекта ===== */
+
+.cs-aspect-legend {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 9px;
+}
+
+.cs-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.cs-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cs-aspect-cols {
+  grid-template-columns: 3px minmax(0, 1.4fr) minmax(0, 1fr) 36px;
+}
+
+/* Смысл аспекта — цветная полоска слева и цвет точки/текста; фон строки белый */
+.cs-aspect-table .cs-table-row {
+  position: relative;
+  border-left: 3px solid transparent;
+}
+
+.cs-nature-positive {
+  border-left-color: #4fa87e;
+}
+
+.cs-nature-neutral {
+  border-left-color: #dda63f;
+}
+
+.cs-nature-negative {
+  border-left-color: #dd6a63;
+}
+
+.cs-aspect-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.cs-aspect-pair {
+  min-width: 0;
+  font-weight: 600;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Название аспекта — цветная пилюля по "натуре" аспекта */
+.cs-aspect-name {
+  min-width: 0;
+  width: fit-content;
+  max-width: 100%;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  padding: 2px 8px;
+  border-radius: 999px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cs-nature-positive .cs-aspect-name {
+  background: #dff0e6;
+  color: #4a8a6b;
+}
+
+.cs-nature-neutral .cs-aspect-name {
+  background: #faf1de;
+  color: #a97a1f;
+}
+
+.cs-nature-negative .cs-aspect-name {
+  background: #fbe6e4;
+  color: #b8483e;
+}
+
+.cs-aspect-orb {
+  font-size: 10.5px;
+  color: var(--ink-soft);
+}
+
+/* configuration rows */
+
+.cs-config-row {
+  display: grid;
+  grid-template-columns: minmax(88px, 0.7fr) minmax(0, 1.3fr);
+  gap: 10px;
+  align-items: center;
+}
+
+.cs-config-type {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--lavender);
+}
+
+.cs-config-planets {
+  min-width: 0;
+  font-size: 11px;
+  color: var(--ink-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ===== expand / collapse ===== */
+
+.cs-toggle-button {
+  width: 100%;
+  margin-top: 7px;
+  padding: 8px 10px;
+  border: 1px solid rgba(128, 101, 199, 0.15);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.48);
+  color: var(--lavender);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  cursor: pointer;
+}
+
+.cs-toggle-button:active {
+  transform: translateY(1px);
+}
+
+.cs-toggle-chevron {
+  font-size: 14px;
+  line-height: 1;
+  transition: transform 180ms ease;
+}
+
+.cs-toggle-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+/* ===== compact phones ===== */
+
+@media (max-width: 350px) {
+  .cs-house-grid {
+    gap: 0 7px;
+  }
+
+  .cs-house-cell {
+    grid-template-columns: 24px minmax(0, 1fr) auto;
+    padding-left: 7px;
+    padding-right: 7px;
+    gap: 5px;
+  }
+
+  .cs-house-num {
+    width: 23px;
+  }
+
+  .cs-table-head,
+  .cs-table-row {
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+
+  .cs-aspect-cols {
+    grid-template-columns: 7px minmax(0, 1.3fr) minmax(0, 1fr) 34px;
+  }
+}

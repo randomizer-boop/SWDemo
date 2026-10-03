@@ -1,0 +1,75 @@
+.rs-title {
+  font-size: 27px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.rs-wheel {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0;
+}
+
+.rs-summary {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.result-center {
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+.result-center .btn-primary {
+  width: min(80%, 264px);
+}
+
+.result-center button {
+  transform: translateY(10px);
+}
+.rs-loading-title {
+  font-size: 27px;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.rs-loading-text {
+  max-width: 280px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.screen-result-loading .result-center {
+  gap: 10px;
+}
+
+.screen-result-loading .spark {
+  animation:
+    spark-pulse 1.8s ease-in-out infinite,
+    loading-float 1.8s ease-in-out infinite;
+}
+
+@keyframes loading-float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-5px) scale(1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen-result-loading .spark {
+    animation: none;
+  }
+}

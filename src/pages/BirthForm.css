@@ -1,0 +1,747 @@
+
+.bf-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 6px;
+  margin-bottom: 4px;
+
+  text-align: center;
+}
+
+.bf-spark {
+  font-size: 22px;
+}
+
+.bf-title {
+  font-size: clamp(27px, 8vw, 34px);
+  font-weight: 700;
+}
+
+.bf-subtitle {
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   FORM CARD
+========================================================= */
+
+.bf-card {
+  position: relative;
+  z-index: 5;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+
+  width: min(100%, 330px);
+  margin: 0 auto;
+  padding: 22px 22px 20px;
+
+  background: var(--card);
+
+  border: 1px solid rgba(37, 27, 61, 0.05);
+  border-radius: var(--radius-lg);
+
+  box-shadow: 0 16px 36px rgba(37, 27, 61, 0.07);
+}
+
+.bf-divider {
+  height: 1px;
+
+  margin: -5px 0;
+
+  background: rgba(37, 27, 61, 0.07);
+}
+
+
+/* =========================================================
+   FIELDS
+========================================================= */
+
+.bf-field-group {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.bf-label {
+  font-size: 11.5px;
+  font-weight: 600;
+
+  color: var(--ink-soft);
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.bf-row {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+}
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.bf-input {
+  box-sizing: border-box;
+
+  height: 46px;
+
+  background: var(--field-bg);
+
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-sm);
+
+  padding: 0 12px;
+
+  font-size: 15px;
+  color: var(--ink);
+
+  outline: none;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.bf-input::placeholder {
+  color: var(--ink-soft);
+  opacity: 0.9;
+}
+
+.bf-input:focus {
+  border-color: var(--accent);
+
+  box-shadow:
+    0 0 0 3px rgba(128, 101, 199, 0.08);
+}
+
+.bf-input-sm {
+  width: 80px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.bf-input-md {
+  width: 100px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.bf-input-full {
+  width: 100%;
+}
+
+.bf-colon {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--ink-soft);
+}
+
+/* =========================================================
+   TIME + GENDER
+========================================================= */
+
+.bf-time-gender-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 16px 20px;
+}
+
+.bf-time-group {
+  flex: 1 1 170px;
+  min-width: 150px;
+  width: auto;
+}
+
+.bf-gender-group {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+.bf-gender-group .bf-label {
+  padding-left: 4px;
+}
+
+.bf-gender {
+  display: flex;
+  gap: 8px;
+  width: fit-content;
+}
+
+.bf-gender-option {
+  width: 62px;
+  height: 46px;
+  box-sizing: border-box;
+
+  padding: 0;
+
+  border: 1px solid rgba(128, 101, 199, 0.14);
+  border-radius: 12px;
+
+  background: var(--field-bg);
+  color: var(--ink-soft);
+
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease,
+    transform 140ms ease;
+}
+
+.bf-gender-option:hover {
+  border-color: rgba(128, 101, 199, 0.28);
+  background: #f2eef9;
+}
+
+.bf-gender-option.active {
+  border-color: var(--lavender);
+  background: var(--lavender);
+  color: #ffffff;
+
+  box-shadow:
+    0 8px 18px rgba(128, 101, 199, 0.18);
+}
+
+.bf-gender-option:active {
+  transform: translateY(1px);
+}
+
+.bf-gender-option:focus-visible {
+  outline: 2px solid var(--lavender);
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   NARROW PHONES (width, not just height)
+========================================================= */
+
+@media (max-width: 400px) {
+  .bf-card {
+    width: min(100%, 320px);
+    padding: 20px 18px 18px;
+  }
+
+  .bf-time-gender-row {
+    gap: 14px 16px;
+  }
+
+  .bf-time-group {
+    min-width: 138px;
+  }
+
+  .bf-input-sm {
+    width: 68px;
+  }
+
+  .bf-input-md {
+    width: 86px;
+  }
+
+  .bf-gender-option {
+    width: 58px;
+    height: 46px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 340px) {
+  .bf-time-gender-row {
+    gap: 12px;
+  }
+
+  .bf-input-sm {
+    width: 60px;
+  }
+
+  .bf-gender-option {
+    width: 52px;
+    height: 44px;
+  }
+}
+
+
+/* =========================================================
+   CHECKBOX
+========================================================= */
+
+.bf-checkbox {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  font-size: 13px;
+  color: var(--ink-soft);
+
+  cursor: pointer;
+}
+
+.bf-checkbox input {
+  width: 16px;
+  height: 16px;
+
+  margin: 0;
+
+  accent-color: var(--accent);
+}
+
+
+/* =========================================================
+   CITY AUTOCOMPLETE
+========================================================= */
+
+.bf-city-wrap {
+  position: relative;
+  z-index: 20;
+
+  width: 100%;
+}
+
+.bf-city-suggestions {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  top: calc(100% - 1px);
+
+  z-index: 100;
+
+  max-height: 220px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid rgba(128, 101, 199, 0.16);
+
+  border-top: none;
+
+  border-radius: 0 0 16px 16px;
+
+  box-shadow:
+    0 16px 32px rgba(37, 27, 61, 0.12),
+    0 4px 10px rgba(37, 27, 61, 0.05);
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.bf-city-suggestions::-webkit-scrollbar {
+  width: 5px;
+}
+
+.bf-city-suggestions::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.bf-city-suggestions::-webkit-scrollbar-thumb {
+  background: rgba(128, 101, 199, 0.25);
+  border-radius: 999px;
+}
+
+
+/* =========================================================
+   CITY OPTION
+========================================================= */
+
+.bf-city-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  width: 100%;
+
+  padding: 12px 15px;
+
+  border: none;
+  border-top: 1px solid rgba(37, 27, 61, 0.06);
+
+  background: #ffffff;
+  color: var(--ink);
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 140ms ease,
+    padding-left 140ms ease;
+}
+
+.bf-city-option:first-child {
+  border-top: none;
+}
+
+.bf-city-option:hover,
+.bf-city-option:focus-visible {
+  background: #f7f4fb;
+  padding-left: 17px;
+}
+
+.bf-city-option:active {
+  background: #eee7f9;
+}
+
+
+/* =========================================================
+   CITY TEXT
+========================================================= */
+
+.bf-city-name {
+  display: block;
+
+  color: var(--ink);
+
+  font-size: 14px;
+  font-weight: 600;
+
+  line-height: 1.3;
+}
+
+.bf-city-meta {
+  display: block;
+
+  margin-top: 3px;
+
+  color: var(--ink-soft);
+
+  font-size: 11.5px;
+  font-weight: 500;
+
+  line-height: 1.35;
+}
+
+
+/* =========================================================
+   CITY STATUS / HINT
+========================================================= */
+
+.bf-city-status {
+  padding: 12px 15px;
+
+  color: var(--ink-soft);
+
+  font-size: 12px;
+  line-height: 1.4;
+
+  background: #ffffff;
+}
+
+.bf-city-hint {
+  display: block;
+
+  margin-top: 7px;
+
+  color: var(--ink-soft);
+
+  font-size: 11.5px;
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   APPROXIMATE TIME WARNING
+========================================================= */
+
+.bf-time-warning-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+
+  background: rgba(37, 27, 61, 0.22);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  animation: bf-warning-fade 180ms ease-out;
+}
+
+.bf-time-warning {
+  width: min(100%, 330px);
+  padding: 24px 22px 20px;
+
+  border: 1px solid rgba(37, 27, 61, 0.05);
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 24px 60px rgba(37, 27, 61, 0.18);
+
+  text-align: center;
+  animation: bf-warning-pop 200ms ease-out;
+}
+
+
+.bf-time-warning h3 {
+  margin: 0 0 10px;
+  font-size: 19px;
+  line-height: 1.2;
+}
+
+.bf-time-warning p {
+  margin: 0 0 9px;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.bf-time-warning p:last-of-type {
+  margin-bottom: 17px;
+}
+
+.bf-time-warning strong {
+  color: var(--ink);
+}
+
+.bf-time-warning-button {
+  width: 100%;
+}
+
+@keyframes bf-warning-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes bf-warning-pop {
+  from {
+    opacity: 0;
+    transform: translateY(5px) scale(.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =========================================================
+   FORM SCREEN LAYERING
+========================================================= */
+
+.screen-form .screen-body {
+  position: relative;
+  z-index: 4;
+}
+
+.screen-form .footer-cta {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* =========================================================
+   COMPACT PHONES
+========================================================= */
+
+@media (max-height: 700px) {
+  .bf-intro {
+    gap: 3px;
+    margin-bottom: 0;
+  }
+
+  .bf-card {
+    gap: 12px;
+
+    padding: 16px 20px;
+  }
+
+  .bf-input {
+    height: 44px;
+    padding: 0 11px;
+    font-size: 15px;
+  }
+
+  .bf-city-suggestions {
+    max-height: 190px;
+  }
+
+  .bf-city-option {
+    padding: 10px 13px;
+  }
+
+  .bf-city-name {
+    font-size: 13.5px;
+  }
+
+  .bf-city-meta {
+    font-size: 11px;
+  }
+
+  .bf-time-gender-row {
+  gap: 20px;
+}
+
+.bf-time-group {
+  width: 180px;
+}
+
+.bf-gender-option {
+  width: 64px;
+  height: 44px;
+}
+}
+
+/* =========================================================
+   PRIVACY MODAL
+========================================================= */
+
+.bf-privacy-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(37, 27, 61, 0.24);
+  backdrop-filter: blur(7px);
+}
+
+.bf-privacy-modal {
+  width: min(100%, 320px);
+  max-height: min(calc(100vh - 40px), 420px);
+  max-height: min(calc(100dvh - 40px), 420px);
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 20px 20px 18px;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 22px 60px rgba(37, 27, 61, 0.18);
+}
+
+.bf-privacy-kicker {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--lavender);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+}
+
+.bf-privacy-modal h3 {
+  font-size: 18px;
+  line-height: 1.15;
+}
+
+/* Текст прокручивается внутри окна, кнопки остаются на виду */
+.bf-privacy-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--lavender-soft) transparent;
+}
+
+.bf-privacy-modal p {
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.bf-privacy-links {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(128, 101, 199, 0.12);
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0 6px;
+
+  color: var(--ink-soft);
+  font-size: 10.5px;
+}
+
+.bf-privacy-links .legal-links {
+  flex-direction: column;
+  gap: 0;
+}
+
+.bf-privacy-links .legal-links span {
+  display: none;
+}
+
+.bf-privacy-actions {
+  flex-shrink: 0;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.bf-privacy-cancel,
+.bf-privacy-confirm {
+  min-height: 46px;
+  border-radius: 999px;
+}
+
+.bf-privacy-cancel {
+  border: 1px solid rgba(128, 101, 199, 0.14);
+  background: var(--field-bg);
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.bf-privacy-confirm {
+  width: 100%;
+  min-height: 46px;
+  padding: 11px 16px;
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   ДЕМО: заблокированная форма
+========================================================= */
+
+.bf-demo-note {
+  width: min(100%, 330px);
+  margin-top: 4px;
+  padding: 9px 12px;
+
+  border-radius: var(--radius-sm);
+  background: rgba(128, 101, 199, 0.1);
+
+  color: var(--ink);
+  font-size: 12.5px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.bf-locked .bf-input[readonly] {
+  cursor: default;
+}
+
+.bf-locked .bf-gender-option:not(.active),
+.bf-locked .bf-checkbox {
+  opacity: 0.55;
+  cursor: default;
+}

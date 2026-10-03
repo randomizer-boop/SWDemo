@@ -1,0 +1,429 @@
+.screen-home {
+  --page-color-start: #f6eefb;
+  --page-color-end: #eee0f6;
+  overflow-y: auto;
+  /* Место под фиксированную нижнюю навигацию */
+  padding-bottom: calc(var(--bottom-nav-clearance) + var(--safe-bottom));
+}
+
+.home-body {
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+/* ===== header ===== */
+
+.home-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Кнопка-пилюля "Изменить данные" */
+.edit-data-button {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid rgba(128, 101, 199, 0.28);
+  border-radius: 999px;
+  background: rgba(128, 101, 199, 0.09);
+  padding: 6px 12px;
+  color: var(--lavender);
+  font: inherit;
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1.1;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.edit-data-button::before {
+  content: "✎";
+  font-size: 10px;
+}
+
+.edit-data-button:active {
+  transform: scale(0.96);
+  background: rgba(128, 101, 199, 0.16);
+}
+
+
+.greeting {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.greeting .hello {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+
+.greeting h1 {
+  font-size: 20px;
+}
+
+/* ===== natal chart ===== */
+
+.home-chart-section {
+  position: relative;
+}
+
+.home-chart-card {
+  position: relative;
+  width: 100%;
+  padding: 13px 9px 12px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 32% 36%, rgba(255,255,255,.98), rgba(255,255,255,.78) 52%, rgba(241,233,249,.9) 100%);
+  box-shadow: 0 14px 34px rgba(76, 55, 111, 0.12);
+}
+
+.home-chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1px 4px 0 6px;
+}
+
+.home-chart-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  color: var(--ink-soft);
+}
+
+.home-chart-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 92px;
+  align-items: center;
+  gap: 5px;
+  margin-top: 1px;
+}
+
+.home-chart-wheel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
+}
+
+.home-chart-wheel .wheel-stage {
+  width: 100%;
+  max-width: 246px;
+}
+
+.home-chart-details {
+  align-self: center;
+  min-width: 0;
+  padding: 4px 0 4px 2px;
+}
+
+.home-data-eyebrow {
+  margin-bottom: 8px;
+  font-size: 8.5px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: .07em;
+  color: var(--ink-soft);
+}
+
+.home-data-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 0 0 6px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid rgba(128,101,199,.11);
+}
+
+.home-data-row span {
+  font-size: 9px;
+  color: var(--ink-soft);
+}
+
+.home-data-row strong {
+  display: block;
+  overflow: hidden;
+  font-size: 10.2px;
+  line-height: 1.25;
+  font-weight: 700;
+  color: var(--ink);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-data-row-city strong {
+  max-width: 84px;
+}
+
+
+/* ===== big three — компактная строка внизу справа карточки карты ===== */
+
+.big-three {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding-top: 9px;
+  border-top: 1px solid rgba(128, 101, 199, 0.1);
+}
+
+.bt-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(128, 101, 199, 0.07);
+  min-width: 0;
+}
+
+.bt-symbol {
+  flex-shrink: 0;
+  color: var(--lavender);
+}
+
+.bt-symbol-text {
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.bt-value {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 64px;
+}
+
+/* ===== free teaser ===== */
+
+.teaser-card {
+  width: 100%;
+  border: 1px solid rgba(154, 120, 219, 0.22);
+  text-align: left;
+  cursor: pointer;
+  background: linear-gradient(135deg, #efe0fb 0%, #fbe4ef 100%);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(128, 101, 199, 0.16);
+  transition: transform 160ms ease;
+}
+
+.teaser-card:active { transform: scale(0.99); }
+
+.teaser-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.teaser-tag {
+  display: inline-block;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.65);
+  padding: 3px 10px;
+  font-size: 10.5px;
+  font-weight: 800;
+  color: var(--lavender);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.teaser-card h2 { font-size: 17px; }
+.teaser-card p { font-size: 13px; }
+
+.teaser-spark {
+  font-size: 20px;
+  color: var(--lavender);
+  opacity: 0.55;
+}
+
+/* Призыв к действию внизу карточки тизера */
+.teaser-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-start;
+  margin-top: 2px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: var(--lavender);
+  color: #ffffff;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.teaser-cta span {
+  transition: transform 160ms ease;
+}
+
+.teaser-card:active .teaser-cta span {
+  transform: translateX(2px);
+}
+
+/* ===== category grid ===== */
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.cat-card {
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  background: var(--card);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  box-shadow: 0 8px 20px rgba(128, 101, 199, 0.08);
+  transition: transform 160ms ease;
+}
+
+.cat-card:active { transform: scale(0.99); }
+
+.cat-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.cat-personality {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.cat-love {
+  background: #f4dce5;
+}
+
+.cat-career {
+  background: #ded3f3;
+}
+
+.cat-money {
+  background: #dfeee2;
+}
+.cat-name { font-size: 13.5px; font-weight: 600; }
+.cat-desc { font-size: 11px; line-height: 1.4; color: var(--ink-soft); }
+
+.lock-pill {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--lavender-soft);
+  color: var(--lavender);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+
+.unlocked-tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #4a8a6b;
+  background: #dff0e6;
+  padding: 2px 7px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+
+/* ===== daily card ===== */
+
+.daily-card {
+  width: 100%;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  background: var(--card);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 8px 20px rgba(128, 101, 199, 0.08);
+  transition: transform 160ms ease;
+}
+
+.daily-card:active { transform: scale(0.99); }
+
+.daily-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  background: #f4e6cc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #d9a24a;
+  flex-shrink: 0;
+}
+
+.daily-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.daily-body h3 {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.daily-lock {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: var(--lavender-soft);
+  color: var(--lavender);
+  font-size: 9px;
+  flex-shrink: 0;
+}
+
+.daily-body p { font-size: 11.5px; margin: 0; }
+.daily-arrow { color: var(--ink-faint); font-size: 16px; }
+
+/* ===== compact phones ===== */
+
+@media (max-width: 350px) {
+  .home-chart-card { padding-inline: 6px; }
+  .home-chart-layout { grid-template-columns: minmax(0, 1fr) 82px; gap: 3px; }
+  .home-chart-wheel .wheel-stage { max-width: 210px; }
+  .home-data-row { margin-bottom: 4px; padding-bottom: 4px; }
+  .home-data-eyebrow { margin-bottom: 6px; }
+  .home-data-row-city strong { max-width: 74px; }
+  .edit-data-button { font-size: 9px; }
+  .bt-value { max-width: 50px; }
+}
+
