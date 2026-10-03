@@ -1,9 +1,15 @@
 // Настройки демо-версии (сайт-портфолио, без бэкенда)
 
-// Ссылка на рабочего Telegram-бота. Вписать сюда (или задать переменную
-// окружения VITE_BOT_URL в настройках Vercel). Пока пусто — кнопки
-// "Открыть бота" не показываются.
-export const BOT_URL = import.meta.env.VITE_BOT_URL || "";
+// Ссылка на рабочего Telegram-бота (можно переопределить переменной
+// окружения VITE_BOT_URL в настройках Vercel)
+export const BOT_URL = import.meta.env.VITE_BOT_URL || "https://t.me/star_wise_bot";
+
+// Демо админ-панели: файл public/admin-demo.html (вымышленные данные, без сервера)
+export const ADMIN_DEMO_URL = `${import.meta.env.BASE_URL}admin-demo.html`;
+
+// Ссылка на TikTok проекта. Вписать сюда — появится на странице демо.
+// Пока пусто — ссылка не показывается.
+export const TIKTOK_URL = import.meta.env.VITE_TIKTOK_URL || "";
 
 // Имя демо-пользователя (в Telegram сюда подставляется first_name)
 export const DEMO_USER_NAME = "Амина";

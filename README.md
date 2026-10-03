@@ -23,16 +23,15 @@
 языках — в `src/demo/demoData.js`. Новая строка в интерфейсе: обернуть в
 `t("…")` и добавить перевод в `en.js`.
 
-## Ссылка на бота
+## Ссылки и демо-админка
 
-Вписать в `src/demo/config.js`:
+Всё в `src/demo/config.js`:
 
-```js
-export const BOT_URL = import.meta.env.VITE_BOT_URL || "https://t.me/ИМЯ_БОТА";
-```
-
-либо задать переменную `VITE_BOT_URL` в Vercel (Settings → Environment Variables).
-Пока ссылка пустая, кнопки «Открыть бота» не показываются.
+- `BOT_URL` — бот в Telegram (сейчас `https://t.me/star_wise_bot`).
+- `TIKTOK_URL` — TikTok проекта. Пока пусто — ссылка не показывается.
+- `ADMIN_DEMO_URL` — демо админ-панели, файл `public/admin-demo.html`
+  (тот же интерфейс, что у рабочей админки, но данные вымышленные и живут в памяти страницы).
+  На сайте открывается по адресу `/admin-demo.html`.
 
 ## Запуск
 

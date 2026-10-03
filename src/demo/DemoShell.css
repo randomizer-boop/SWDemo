@@ -28,9 +28,7 @@
   max-width: 480px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-
-  padding: 8px 0;
+  gap: 13px;
 }
 
 .demo-topline {
@@ -100,13 +98,13 @@
 }
 
 .demo-title {
-  font-size: 52px;
+  font-size: 46px;
   line-height: 1;
 }
 
 .demo-lead {
-  font-size: 16.5px;
-  line-height: 1.6;
+  font-size: 15.5px;
+  line-height: 1.55;
   color: var(--ink);
 }
 
@@ -157,6 +155,73 @@
   background: #fff;
 }
 
+.demo-text-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 46px;
+  padding: 0 6px;
+
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--ink);
+  text-underline-offset: 4px;
+}
+
+/* ===== карточка "Админ-панель владельца" ===== */
+
+.demo-admin-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 14px 18px;
+
+  border-radius: 18px;
+  background: var(--ink);
+  color: #fff;
+  text-decoration: none;
+
+  box-shadow: 0 12px 28px rgba(37, 27, 61, 0.2);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.demo-admin-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 34px rgba(37, 27, 61, 0.26);
+}
+
+.demo-admin-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.demo-admin-label {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.demo-admin-text {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: #d9ccf5;
+}
+
+.demo-admin-cta {
+  flex: none;
+
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
 .demo-block h2 {
   margin-bottom: 8px;
 
@@ -176,8 +241,8 @@
   flex-direction: column;
   gap: 6px;
 
-  font-size: 14px;
-  line-height: 1.55;
+  font-size: 13.5px;
+  line-height: 1.5;
   color: var(--ink);
 }
 

@@ -266,8 +266,12 @@ export default {
 
   // ---------- страница демо ----------
   "Демо-версия": "Demo",
-  "демо": "demo",
-  "Заново": "Restart",
+  "Демо": "Demo",
+  "Админка ↗": "Admin ↗",
+  "Админ-панель владельца": "Owner's admin panel",
+  "Платежи, пользователи, поддержка и цены — на вымышленных данных, без пароля.":
+    "Payments, users, support and prices — on fictional data, no password.",
+  "Открыть демо ↗": "Open the demo ↗",
   "Бот ↗": "Bot ↗",
   "Telegram Mini App с натальной картой. Пользователь вводит дату, время и город рождения — получает рассчитанную карту, бесплатный портрет и платные разборы по категориям.":
     "A Telegram Mini App for natal charts. The user enters their date, time and city of birth and gets a calculated chart, a free portrait and paid readings by category.",

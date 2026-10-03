@@ -1,0 +1,1480 @@
+<!doctype html>
+<!-- StarWise · демо админ-панели. Собрано из backend/admin.html: тот же интерфейс,
+     но данные вымышленные и хранятся в памяти страницы (сервер не нужен). -->
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>StarWise · Admin Demo</title>
+<style>
+  :root {
+    --bg: #f6f3fb;
+    --card: #ffffff;
+    --line: #e7e0f3;
+    --ink: #251b3d;
+    --ink-soft: #6f6585;
+    --ink-faint: #a49bb6;
+    --accent: #8065c7;
+    --accent-dark: #6a4fb0;
+    --accent-soft: #efe9fb;
+    --ok: #2f8f5b;
+    --ok-soft: #e4f4ea;
+    --warn: #b0562a;
+    --warn-soft: #fbeadf;
+    --danger: #c0392b;
+    --danger-soft: #fbe6e3;
+    --radius: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  button, input, select, textarea { font: inherit; color: inherit; }
+
+  .hidden { display: none !important; }
+
+  /* ---------- демо-баннер ---------- */
+
+  .demo-banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 20px;
+    background: var(--warn-soft);
+    color: var(--warn);
+    font-size: 13px;
+  }
+
+  .demo-banner b {
+    flex: none;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--warn);
+    color: #fff;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+  }
+
+  /* ---------- вход ---------- */
+
+  .login-wrap {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .login-card {
+    width: min(100%, 360px);
+    padding: 28px 26px;
+    border-radius: 20px;
+    background: var(--card);
+    box-shadow: 0 18px 50px rgba(60, 40, 90, 0.12);
+  }
+
+  .login-card h1 { margin: 0 0 18px; font-size: 20px; }
+  .login-card label { display: block; margin-bottom: 6px; font-size: 12px; font-weight: 600; color: var(--ink-soft); }
+
+  /* ---------- общие элементы ---------- */
+
+  .input, .select, .textarea {
+    width: 100%;
+    min-height: 40px;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #fff;
+    outline: none;
+  }
+
+  .input:focus, .select:focus, .textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(128, 101, 199, 0.15); }
+
+  .btn {
+    min-height: 36px;
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #fff;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .btn:hover { border-color: var(--accent); }
+  .btn:disabled { opacity: 0.5; cursor: default; }
+  .btn-primary { border-color: var(--accent); background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent-dark); }
+  .btn-danger { border-color: #e9b8b1; color: var(--danger); }
+  .btn-danger:hover { border-color: var(--danger); background: var(--danger-soft); }
+  .btn-block { width: 100%; min-height: 42px; margin-top: 14px; }
+
+  .link {
+    padding: 0;
+    border: none;
+    background: none;
+    color: inherit;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .link:hover { color: var(--accent-dark); text-decoration: underline; }
+
+  .error-text { margin-top: 10px; color: var(--danger); font-size: 12.5px; min-height: 18px; }
+
+  /* ---------- шапка ---------- */
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .brand { display: flex; align-items: baseline; gap: 8px; font-weight: 700; font-size: 16px; }
+  .brand small { color: var(--ink-faint); font-weight: 500; font-size: 12px; }
+  .topbar-actions { display: flex; align-items: center; gap: 8px; }
+  .updated { color: var(--ink-faint); font-size: 12px; white-space: nowrap; }
+
+  .page { width: min(100%, 1180px); margin: 0 auto; padding: 18px 20px 48px; }
+
+  /* ---------- сводка ---------- */
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+
+  .stat {
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--card);
+  }
+
+  .stat b { display: block; font-size: 22px; line-height: 1.2; }
+  .stat span { color: var(--ink-soft); font-size: 12px; }
+  .stat.is-alert { border-color: var(--accent); background: var(--accent-soft); }
+  .stat.is-alert b { color: var(--accent-dark); }
+
+  /* ---------- вкладки ---------- */
+
+  .tabs { display: flex; gap: 4px; margin: 20px 0 12px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+
+  .tab {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--ink-soft);
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .tab.active { color: var(--accent-dark); border-bottom-color: var(--accent); }
+
+  .count {
+    min-width: 20px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .toolbar .input { width: 240px; }
+  .toolbar .select { width: 170px; }
+  .toolbar .spacer { flex: 1 1 auto; }
+  .hint { color: var(--ink-faint); font-size: 12px; }
+
+  /* ---------- таблицы ---------- */
+
+  .table-wrap {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--card);
+    overflow-x: auto;
+  }
+
+  table { width: 100%; border-collapse: collapse; min-width: 760px; }
+
+  th, td { padding: 10px 14px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--line); }
+  th { color: var(--ink-soft); font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; background: #fbf9fe; }
+  tr:last-child td { border-bottom: none; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  td.actions, th.actions { text-align: right; }
+
+  .user-name { font-weight: 600; }
+  .muted { color: var(--ink-faint); font-size: 12px; }
+  .empty { padding: 28px 14px; text-align: center; color: var(--ink-faint); }
+
+  .badge { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 700; white-space: nowrap; }
+  .badge-ok { background: var(--ok-soft); color: var(--ok); }
+  .badge-refund { background: var(--warn-soft); color: var(--warn); }
+  .badge-plain { background: var(--accent-soft); color: var(--accent-dark); }
+  .badge-off { background: #eeeaf3; color: var(--ink-soft); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 4px; }
+
+  .price-input { width: 96px; min-height: 34px; text-align: right; }
+
+  /* ---------- поддержка ---------- */
+
+  .support {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    height: min(640px, calc(100vh - 150px));
+    min-height: 420px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--card);
+    overflow: hidden;
+  }
+
+  .thread-side { display: flex; flex-direction: column; min-height: 0; border-right: 1px solid var(--line); }
+
+  .thread-side-head {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 10px 8px 14px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-soft);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .btn-small { min-height: 30px; padding: 4px 10px; font-size: 12px; }
+
+  .thread-list { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+
+  .thread-item {
+    display: block;
+    width: 100%;
+    padding: 12px 14px;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .thread-item:hover { background: #fbf9fe; }
+  .thread-item.active { background: var(--accent-soft); }
+  .thread-item-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .thread-item-top .user-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .thread-preview { margin-top: 2px; color: var(--ink-soft); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .thread-item.is-unread .thread-preview { color: var(--ink); font-weight: 600; }
+
+  .thread { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+
+  .thread-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .thread-head .who { flex: 1 1 auto; min-width: 0; }
+  .thread-back { display: none; }
+
+  .messages {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px;
+    background: #fbf9fe;
+  }
+
+  .msg { max-width: min(78%, 520px); padding: 8px 12px; border-radius: 14px; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .msg-in { align-self: flex-start; background: #fff; border: 1px solid var(--line); border-bottom-left-radius: 4px; }
+  .msg-out { align-self: flex-end; background: var(--accent); color: #fff; border-bottom-right-radius: 4px; }
+  .msg time { display: block; margin-top: 3px; font-size: 10.5px; opacity: 0.65; }
+
+  .reply { display: flex; align-items: flex-end; gap: 8px; padding: 10px 14px; border-top: 1px solid var(--line); }
+  .reply .textarea { min-height: 42px; max-height: 160px; resize: vertical; }
+  .reply-hint { padding: 0 14px 10px; }
+
+  .thread-placeholder { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; padding: 20px; color: var(--ink-faint); text-align: center; }
+
+  /* ---------- карточка пользователя ---------- */
+
+  .card-rows { margin: 4px 0 0; }
+  .card-row { display: flex; justify-content: space-between; gap: 14px; padding: 7px 0; border-bottom: 1px solid var(--line); }
+  .card-row:last-child { border-bottom: none; }
+  .card-row > span:first-child { color: var(--ink-soft); flex-shrink: 0; }
+  .card-row > :last-child { text-align: right; }
+  .card-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+
+  /* ---------- модальное окно и уведомления ---------- */
+
+  .backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(37, 27, 61, 0.35);
+  }
+
+  .modal { width: min(100%, 420px); max-height: calc(100vh - 40px); overflow-y: auto; padding: 22px; border-radius: 18px; background: var(--card); box-shadow: 0 22px 60px rgba(37, 27, 61, 0.25); }
+  .modal h3 { margin: 0 0 8px; font-size: 17px; }
+  .modal p { margin: 0 0 14px; color: var(--ink-soft); font-size: 13px; }
+  .modal label { display: block; margin: 10px 0 5px; font-size: 12px; font-weight: 600; color: var(--ink-soft); }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
+
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    z-index: 30;
+    transform: translateX(-50%);
+    max-width: calc(100% - 40px);
+    padding: 11px 16px;
+    border-radius: 12px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 13px;
+    box-shadow: 0 12px 30px rgba(37, 27, 61, 0.3);
+  }
+
+  .toast.is-error { background: var(--danger); }
+
+  @media (max-width: 760px) {
+    .page { padding: 14px 12px 40px; }
+    .topbar { padding: 10px 12px; }
+    .updated { display: none; }
+    .toolbar .input, .toolbar .select { width: 100%; }
+
+    .support { grid-template-columns: 1fr; height: calc(100vh - 130px); }
+    .support .thread { display: none; }
+    .support.is-thread-open .thread-side { display: none; }
+    .support.is-thread-open .thread { display: flex; }
+    .thread-back { display: inline-block; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================== ВХОД ============================== -->
+<div id="login" class="login-wrap hidden">
+  <form id="login-form" class="login-card" autocomplete="off">
+    <h1>StarWise Admin Panel</h1>
+    <label for="token-input">Админ-токен</label>
+    <input id="token-input" class="input" type="password" required />
+    <button class="btn btn-primary btn-block" type="submit">Войти</button>
+    <div id="login-error" class="error-text"></div>
+  </form>
+</div>
+
+<!-- ============================== ПАНЕЛЬ ============================== -->
+<div id="app" class="hidden">
+  <header class="topbar">
+    <div class="brand">StarWise <small>Admin Demo</small></div>
+    <div class="topbar-actions">
+      <span id="updated" class="updated"></span>
+      <button id="refresh-btn" class="btn" type="button">Обновить</button>
+      <button id="logout-btn" class="btn" type="button">Сбросить демо</button>
+    </div>
+  </header>
+  <div class="demo-banner"><b>ДЕМО</b> Вымышленные пользователи и платежи. Все действия работают, изменения сбрасываются при перезагрузке страницы.</div>
+
+  <main class="page">
+    <section id="stats" class="stats" aria-label="Сводка"></section>
+
+    <nav class="tabs" aria-label="Разделы">
+      <button class="tab active" data-tab="payments" type="button">Платежи</button>
+      <button class="tab" data-tab="users" type="button">Пользователи</button>
+      <button class="tab" data-tab="support" type="button">Поддержка <span id="support-count" class="count hidden"></span></button>
+      <button class="tab" data-tab="categories" type="button">Категории и цены</button>
+    </nav>
+
+    <!-- Платежи -->
+    <section id="tab-payments">
+      <div class="toolbar">
+        <select id="pay-status" class="select" aria-label="Статус">
+          <option value="">Все статусы</option>
+          <option value="paid">Оплачен</option>
+          <option value="refunded">Возвращён</option>
+        </select>
+        <input id="pay-user" class="input" inputmode="numeric" placeholder="Telegram ID пользователя" />
+        <button id="pay-apply" class="btn" type="button">Показать</button>
+        <button id="pay-reset" class="btn hidden" type="button">Сбросить</button>
+        <span class="spacer"></span>
+        <span id="pay-count" class="hint"></span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>№</th><th>Дата</th><th>Пользователь</th><th>Продукт</th>
+              <th class="num">Сумма</th><th>Источник</th><th>Статус</th><th class="actions">Действие</th>
+            </tr>
+          </thead>
+          <tbody id="pay-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Пользователи -->
+    <section id="tab-users" class="hidden">
+      <div class="toolbar">
+        <input id="user-search" class="input" placeholder="Telegram ID, @username или имя" />
+        <button id="user-apply" class="btn" type="button">Найти</button>
+        <button id="user-reset" class="btn hidden" type="button">Сбросить</button>
+        <span class="spacer"></span>
+        <button id="grant-open" class="btn btn-primary" type="button">Выдать доступ по Telegram ID</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Пользователь</th><th>Telegram ID</th><th>Последний визит</th><th>Карта</th>
+              <th>Доступ</th><th class="num">Оплачено</th><th class="actions">Действие</th>
+            </tr>
+          </thead>
+          <tbody id="user-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Поддержка -->
+    <section id="tab-support" class="hidden">
+      <div id="support" class="support">
+        <aside class="thread-side" aria-label="Обращения">
+          <div class="thread-side-head">
+            <span>Обращения</span>
+            <button id="cleanup-open" class="btn btn-small" type="button">Очистить старые</button>
+          </div>
+          <div id="thread-list" class="thread-list"></div>
+        </aside>
+        <div id="thread" class="thread"></div>
+      </div>
+    </section>
+
+    <!-- Категории -->
+    <section id="tab-categories" class="hidden">
+      <div class="toolbar">
+        <span class="hint">Цена и доступность меняются сразу, без перезапуска сервера. Отключённую категорию нельзя купить.</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Категория</th><th>ID</th><th class="num">Цена, Stars</th><th>Продаётся</th><th class="actions">Действие</th>
+            </tr>
+          </thead>
+          <tbody id="cat-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="modal-root"></div>
+<div id="toast" class="toast hidden" role="status"></div>
+
+<script>
+(() => {
+  "use strict";
+
+  const TOKEN_KEY = "starwise_admin_token";
+  const ACTIVITY_KEY = "starwise_admin_last_activity";
+  const IDLE_LIMIT_MS = Number.MAX_SAFE_INTEGER; // ДЕМО: без автовыхода
+  const AUTO_REFRESH_MS = 30 * 1000;
+  const REPLY_MAX_LENGTH = 4000;
+  const TABS = ["payments", "users", "support", "categories"];
+
+  const $ = (id) => document.getElementById(id);
+
+  let token = "demo"; // ДЕМО: вход без токена
+  let lastActivity = Date.now();
+  let categories = [];
+  let activeTab = "payments";
+  let openThreadId = null; // Telegram ID пользователя, чья переписка открыта
+
+  // ---------- запросы к /admin/* ----------
+
+  // ДЕМО: вместо сервера — вымышленные данные в памяти страницы.
+  // Форматы ответов те же, что у боевого API (/admin/*), поэтому остальной код панели не менялся.
+
+  const NOW = Date.now();
+  const MIN = 60 * 1000, HOUR = 60 * MIN, DAY = 24 * HOUR;
+  const iso = (msAgo) => new Date(NOW - msAgo).toISOString();
+
+  const DB = (() => {
+    const categories = [
+      { id: "personality", name: "Личность", description: "Полный разбор личности: Солнце, Луна, Асцендент, управитель ASC, Меркурий", price_stars: 149, is_active: true },
+      { id: "love", name: "Отношения", description: "Как ты влюбляешься и что притягивает: Венера, Марс, Луна, 7 дом", price_stars: 149, is_active: true },
+      { id: "career", name: "Карьера", description: "MC, предназначение и путь: управитель MC, Сатурн, Северный узел", price_stars: 149, is_active: true },
+      { id: "money", name: "Финансы", description: "Склад характера в деньгах: 2 и 8 дома, Венера, Юпитер, Сатурн", price_stars: 149, is_active: true },
+      { id: "daily_subscription", name: "Ежедневный прогноз + Таро", description: "Прогноз дня по транзитам к твоей карте и карта Таро дня — каждый день", price_stars: 249, is_active: true },
+    ];
+
+    // Вымышленные пользователи: имя, username (или null), язык
+    const people = [
+      ["Амина", "amina_demo", "ru"], ["Тимур", "timur_demo", "ru"], ["Дарья", null, "ru"], ["Алихан", "alikhan_demo", "ru"],
+      ["Мадина", "madina_demo", "ru"], ["Игорь", null, "ru"], ["Сабина", "sabina_demo", "ru"], ["Олжас", "olzhas_demo", "ru"],
+      ["Emma", "emma_demo", "en"], ["Арман", "arman_demo", "ru"], ["Лейла", "leila_demo", "ru"], ["Nikita", null, "en"],
+      ["Жанна", "zhanna_demo", "ru"], ["Руслан", "ruslan_demo", "ru"], ["Камила", "kamila_demo", "ru"], ["Олег", null, "ru"],
+      ["Айгерим", "aigerim_demo", "ru"], ["Mia", "mia_demo", "en"], ["Данияр", "daniyar_demo", "ru"], ["София", "sofia_demo", "ru"],
+      ["Ерлан", null, "ru"], ["Алина", "alina_demo", "ru"], ["Марк", "mark_demo", "ru"], ["Асель", "asel_demo", "ru"],
+    ];
+    const users = people.map(([first_name, username, language_code], i) => ({
+      telegram_user_id: 700100201 + i,
+      first_name, username, language_code,
+      created_at: iso((30 - i) * DAY + (i * 37 % 11) * HOUR),
+      last_seen_at: iso(i < 8 ? (i * 3 + 1) * HOUR : (i - 6) * DAY + (i % 7) * HOUR),
+      has_profile: i % 5 !== 3,
+    }));
+
+    // Платежи: [индекс пользователя, категория, источник, статус, давность]
+    const rows = [
+      [0, "career", "telegram", "paid", 25 * MIN], [4, "daily_subscription", "telegram", "paid", 2 * HOUR],
+      [1, "personality", "telegram", "paid", 5 * HOUR], [2, "love", "admin", "paid", 9 * HOUR],
+      [6, "money", "telegram", "refunded", DAY + HOUR], [3, "personality", "telegram", "paid", DAY + 4 * HOUR],
+      [7, "career", "telegram", "paid", 2 * DAY], [5, "love", "telegram", "paid", 2 * DAY + 6 * HOUR],
+      [0, "daily_subscription", "telegram", "paid", 3 * DAY], [8, "personality", "telegram", "paid", 3 * DAY + 5 * HOUR],
+      [10, "love", "telegram", "paid", 4 * DAY], [9, "money", "telegram", "paid", 4 * DAY + 8 * HOUR],
+      [12, "daily_subscription", "telegram", "paid", 5 * DAY], [13, "career", "telegram", "paid", 6 * DAY],
+      [14, "personality", "telegram", "refunded", 7 * DAY], [16, "love", "telegram", "paid", 8 * DAY],
+      [17, "personality", "telegram", "paid", 9 * DAY], [18, "daily_subscription", "telegram", "paid", 11 * DAY],
+      [19, "money", "telegram", "paid", 13 * DAY], [21, "career", "admin", "paid", 15 * DAY],
+      [22, "personality", "telegram", "paid", 18 * DAY], [1, "love", "telegram", "paid", 21 * DAY],
+    ];
+    const price = (id) => categories.find((c) => c.id === id).price_stars;
+    const payments = rows.map(([ui, category_id, source, status, ago], i) => ({
+      id: 1048 - i,
+      telegram_user_id: users[ui].telegram_user_id,
+      category_id, source, status,
+      amount: source === "admin" ? 0 : price(category_id),
+      created_at: iso(ago),
+      refunded_at: status === "refunded" ? iso(Math.max(ago - 5 * HOUR, HOUR)) : null,
+    }));
+
+    // Обращения в поддержку: id пользователя -> сообщения
+    const msg = (direction, text, ago, read = true) => ({ direction, text, created_at: iso(ago), read });
+    const threads = new Map([
+      [users[1].telegram_user_id, [
+        msg("in", "Здравствуйте! Оплатил «Личность», но раздел не открылся", 14 * MIN, false),
+        msg("in", "Оплата прошла, Stars списались", 12 * MIN, false),
+      ]],
+      [users[4].telegram_user_id, [
+        msg("in", "Как отменить подписку на прогноз?", HOUR, false),
+      ]],
+      [users[2].telegram_user_id, [
+        msg("in", "Не получается оплатить «Отношения», пишет ошибку", 10 * HOUR),
+        msg("out", "Доступ выдали вручную, проверьте, пожалуйста", 9 * HOUR),
+        msg("in", "Всё открылось, спасибо!", 6 * HOUR),
+      ]],
+      [users[9].telegram_user_id, [
+        msg("in", "Можно ли поменять город рождения?", 5 * DAY),
+        msg("out", "Да: на главном экране нажмите «Изменить данные»", 5 * DAY - HOUR),
+      ]],
+    ]);
+
+    return { categories, users, payments, threads, nextPaymentId: 1049 };
+  })();
+
+  function demoError(status, detail) {
+    const err = new Error(detail);
+    err.status = status;
+    return err;
+  }
+
+  const findUser = (id) => DB.users.find((u) => u.telegram_user_id === Number(id));
+  const activePayments = (userId) => DB.payments.filter((p) => p.telegram_user_id === userId && p.status === "paid");
+
+  function userView(u) {
+    const paid = activePayments(u.telegram_user_id);
+    return {
+      ...u,
+      stars_paid: paid.reduce((sum, p) => sum + (p.source === "admin" ? 0 : p.amount), 0),
+      entitlements: paid.map((p) => ({
+        category_id: p.category_id,
+        expires_at: p.category_id === "daily_subscription"
+          ? new Date(new Date(p.created_at).getTime() + 30 * DAY).toISOString()
+          : null,
+      })),
+    };
+  }
+
+  function paymentView(p) {
+    const u = findUser(p.telegram_user_id) || {};
+    const cat = DB.categories.find((c) => c.id === p.category_id);
+    return { ...p, first_name: u.first_name, username: u.username, category_name: cat ? cat.name : p.category_id };
+  }
+
+  async function api(path, options = {}) {
+    await new Promise((resolve) => setTimeout(resolve, 120)); // небольшая "сетевая" задержка
+    const url = new URL(path, window.location.origin);
+    const route = url.pathname;
+    const q = url.searchParams;
+    const method = (options.method || "GET").toUpperCase();
+    const body = options.body ? JSON.parse(options.body) : {};
+    let m;
+
+    if (route === "/admin/overview") {
+      const paid = DB.payments.filter((p) => p.status === "paid" && p.source !== "admin");
+      const subs = DB.payments.filter((p) => p.status === "paid" && p.category_id === "daily_subscription"
+        && new Date(p.created_at).getTime() + 30 * DAY > Date.now());
+      let unread = 0;
+      DB.threads.forEach((list) => { unread += list.filter((x) => x.direction === "in" && !x.read).length; });
+      return {
+        users: DB.users.length,
+        profiles: DB.users.filter((u) => u.has_profile).length,
+        paid_payments: paid.length,
+        stars_total: paid.reduce((sum, p) => sum + p.amount, 0),
+        refunded_payments: DB.payments.filter((p) => p.status === "refunded").length,
+        active_subscriptions: subs.length,
+        support_unread: unread,
+      };
+    }
+
+    if (route === "/admin/payments") {
+      let list = DB.payments;
+      if (q.get("status")) list = list.filter((p) => p.status === q.get("status"));
+      if (q.get("telegram_user_id")) list = list.filter((p) => p.telegram_user_id === Number(q.get("telegram_user_id")));
+      return { payments: list.map(paymentView) };
+    }
+
+    if ((m = route.match(/^\/admin\/payments\/(\d+)\/refund$/)) && method === "POST") {
+      const p = DB.payments.find((x) => x.id === Number(m[1]));
+      if (!p) throw demoError(404, "Платёж не найден.");
+      if (p.status !== "paid") throw demoError(400, "Платёж уже возвращён.");
+      p.status = "refunded";
+      p.refunded_at = new Date().toISOString();
+      return { status: "ok" };
+    }
+
+    if (route === "/admin/users") {
+      const search = (q.get("search") || "").trim().toLowerCase().replace(/^@/, "");
+      let list = DB.users;
+      if (search) {
+        list = list.filter((u) =>
+          String(u.telegram_user_id) === search ||
+          (u.username || "").toLowerCase().includes(search) ||
+          (u.first_name || "").toLowerCase().includes(search));
+      }
+      list = [...list].sort((a, b) => new Date(b.last_seen_at) - new Date(a.last_seen_at));
+      return { users: list.slice(0, Number(q.get("limit")) || 200).map(userView) };
+    }
+
+    if ((m = route.match(/^\/admin\/users\/(\d+)\/profile$/)) && method === "DELETE") {
+      const u = findUser(m[1]);
+      if (!u) throw demoError(404, "Пользователь не найден.");
+      u.has_profile = false;
+      return { status: "ok" };
+    }
+
+    if (route === "/admin/grant" && method === "POST") {
+      const cat = DB.categories.find((c) => c.id === body.category_id);
+      if (!cat) throw demoError(400, "Такой категории нет.");
+      let u = findUser(body.telegram_user_id);
+      if (!u) {
+        u = {
+          telegram_user_id: Number(body.telegram_user_id), first_name: null, username: null, language_code: null,
+          created_at: new Date().toISOString(), last_seen_at: new Date().toISOString(), has_profile: false,
+        };
+        DB.users.push(u);
+      }
+      if (activePayments(u.telegram_user_id).some((p) => p.category_id === cat.id)) {
+        throw demoError(400, "У пользователя уже есть этот доступ.");
+      }
+      DB.payments.unshift({
+        id: DB.nextPaymentId++, telegram_user_id: u.telegram_user_id, category_id: cat.id,
+        source: "admin", status: "paid", amount: 0, created_at: new Date().toISOString(), refunded_at: null,
+      });
+      return { status: "ok" };
+    }
+
+    if (route === "/admin/support" && method === "GET") {
+      const threads = [];
+      DB.threads.forEach((list, id) => {
+        if (!list.length) return;
+        const last = list[list.length - 1];
+        const u = findUser(id) || { telegram_user_id: id };
+        threads.push({
+          telegram_user_id: id, first_name: u.first_name, username: u.username,
+          unread: list.filter((x) => x.direction === "in" && !x.read).length,
+          last_at: last.created_at, last_direction: last.direction, last_text: last.text,
+        });
+      });
+      threads.sort((a, b) => new Date(b.last_at) - new Date(a.last_at));
+      return { threads };
+    }
+
+    if (route === "/admin/support" && method === "DELETE") {
+      const limit = Date.now() - Number(q.get("older_than_days")) * DAY;
+      let removedThreads = 0, removedMessages = 0;
+      [...DB.threads.entries()].forEach(([id, list]) => {
+        const last = list[list.length - 1];
+        if (last && new Date(last.created_at).getTime() < limit) {
+          removedThreads += 1;
+          removedMessages += list.length;
+          DB.threads.delete(id);
+        }
+      });
+      return { threads: removedThreads, messages: removedMessages };
+    }
+
+    if ((m = route.match(/^\/admin\/support\/(\d+)\/reply$/)) && method === "POST") {
+      const id = Number(m[1]);
+      if (!findUser(id)) throw demoError(404, "Пользователь не найден.");
+      if (!DB.threads.has(id)) DB.threads.set(id, []);
+      DB.threads.get(id).push({ direction: "out", text: String(body.text || ""), created_at: new Date().toISOString(), read: true });
+      return { status: "ok" };
+    }
+
+    if ((m = route.match(/^\/admin\/support\/(\d+)$/))) {
+      const id = Number(m[1]);
+      const u = findUser(id);
+      if (!u) throw demoError(404, "Пользователь не найден.");
+      if (method === "DELETE") {
+        DB.threads.delete(id);
+        return { status: "ok" };
+      }
+      const list = DB.threads.get(id) || [];
+      list.forEach((x) => { x.read = true; }); // открытие переписки отмечает входящие прочитанными
+      return { user: userView(u), messages: list.map(({ direction, text, created_at }) => ({ direction, text, created_at })) };
+    }
+
+    if (route === "/admin/categories") {
+      return { categories: DB.categories.map((c) => ({ ...c })) };
+    }
+
+    if ((m = route.match(/^\/admin\/categories\/([^/]+)$/)) && method === "PATCH") {
+      const cat = DB.categories.find((c) => c.id === decodeURIComponent(m[1]));
+      if (!cat) throw demoError(404, "Категория не найдена.");
+      if (body.price_stars !== undefined) cat.price_stars = Number(body.price_stars);
+      if (body.is_active !== undefined) cat.is_active = Boolean(body.is_active);
+      return { status: "ok" };
+    }
+
+    throw demoError(404, "В демо этот запрос не поддерживается.");
+  }
+
+  // ---------- мелкие помощники ----------
+
+  // Все данные вставляются через textContent — имена и сообщения не исполняются как HTML
+  function el(tag, props = {}, children = []) {
+    const node = document.createElement(tag);
+    for (const [key, value] of Object.entries(props)) {
+      if (key === "class") node.className = value;
+      else if (key === "text") node.textContent = value;
+      else if (key === "on") for (const [evt, fn] of Object.entries(value)) node.addEventListener(evt, fn);
+      else node.setAttribute(key, value);
+    }
+    for (const child of [].concat(children)) if (child) node.append(child);
+    return node;
+  }
+
+  function formatDate(iso) {
+    if (!iso) return "—";
+    return new Date(iso).toLocaleString("ru-RU", {
+      day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit",
+    });
+  }
+
+  // Сегодняшние сообщения — только время, остальные — дата и время
+  function formatShort(iso) {
+    const date = new Date(iso);
+    const time = date.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
+    if (date.toDateString() === new Date().toDateString()) return time;
+    return `${date.toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit" })} ${time}`;
+  }
+
+  function categoryName(id) {
+    const cat = categories.find((c) => c.id === id);
+    return cat ? cat.name : id;
+  }
+
+  function displayName(u) {
+    return u.first_name || (u.username ? `@${u.username}` : `ID ${u.telegram_user_id}`);
+  }
+
+  // Ячейка с именем: клик открывает карточку пользователя
+  function userCell(u) {
+    return el("td", {}, [
+      el("button", {
+        class: "link user-name", type: "button", text: u.first_name || "Без имени",
+        on: { click: () => openUserCard(u.telegram_user_id) },
+      }),
+      el("div", { class: "muted", text: u.username ? `@${u.username}` : "без username" }),
+    ]);
+  }
+
+  let toastTimer = null;
+  function toast(message, isError = false) {
+    const node = $("toast");
+    node.textContent = message;
+    node.classList.toggle("is-error", isError);
+    node.classList.remove("hidden");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => node.classList.add("hidden"), isError ? 6000 : 3000);
+  }
+
+  function handleError(err) {
+    if (err.status === 401) { logout("Токен не подошёл — войдите заново."); return; }
+    toast(err.message || "Что-то пошло не так", true);
+  }
+
+  function emptyRow(colspan, text) {
+    return el("tr", {}, el("td", { class: "empty", colspan: String(colspan), text }));
+  }
+
+  function markUpdated() {
+    $("updated").textContent = `Обновлено в ${new Date().toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}`;
+  }
+
+  // ---------- модальное окно ----------
+
+  function closeModal() { $("modal-root").replaceChildren(); }
+  function isModalOpen() { return $("modal-root").childElementCount > 0; }
+
+  function showModal(content) {
+    const backdrop = el("div", { class: "backdrop" }, content);
+    backdrop.addEventListener("mousedown", (event) => { if (event.target === backdrop) closeModal(); });
+    $("modal-root").replaceChildren(backdrop);
+  }
+
+  function openModal({ title, text, fields = [], confirmLabel, danger = false, onConfirm }) {
+    const errorBox = el("div", { class: "error-text" });
+    const confirmBtn = el("button", {
+      class: `btn ${danger ? "btn-danger" : "btn-primary"}`, type: "submit", text: confirmLabel,
+    });
+    const form = el("form", { class: "modal" }, [
+      el("h3", { text: title }),
+      text ? el("p", { text }) : null,
+      ...fields,
+      errorBox,
+      el("div", { class: "modal-actions" }, [
+        el("button", { class: "btn", type: "button", text: "Отмена", on: { click: closeModal } }),
+        confirmBtn,
+      ]),
+    ]);
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      confirmBtn.disabled = true;
+      errorBox.textContent = "";
+      try {
+        await onConfirm();
+        closeModal();
+      } catch (err) {
+        if (err.status === 401) { closeModal(); handleError(err); return; }
+        errorBox.textContent = err.message || "Не получилось";
+        confirmBtn.disabled = false;
+      }
+    });
+    showModal(form);
+    const first = form.querySelector("input:not([readonly]), select");
+    if (first) first.focus();
+  }
+
+  // ---------- сводка ----------
+
+  async function loadOverview() {
+    const o = await api("/admin/overview");
+    const tiles = [
+      [o.users, "пользователей"],
+      [o.profiles, "с сохранённой картой"],
+      [o.paid_payments, "оплат через Stars"],
+      [o.stars_total, "Stars получено"],
+      [o.refunded_payments, "возвратов"],
+      [o.active_subscriptions, "активных подписок"],
+      [o.support_unread, "новых сообщений в поддержку", o.support_unread > 0],
+    ];
+    $("stats").replaceChildren(
+      ...tiles.map(([value, label, alert]) =>
+        el("div", { class: `stat${alert ? " is-alert" : ""}` }, [
+          el("b", { text: Number(value).toLocaleString("ru-RU") }),
+          el("span", { text: label }),
+        ])
+      )
+    );
+    const badge = $("support-count");
+    badge.textContent = String(o.support_unread);
+    badge.classList.toggle("hidden", !o.support_unread);
+  }
+
+  // ---------- платежи ----------
+
+  async function loadPayments() {
+    const params = new URLSearchParams({ limit: "200" });
+    const status = $("pay-status").value;
+    const userId = $("pay-user").value.trim();
+    if (status) params.set("status", status);
+    if (userId) {
+      if (!/^\d+$/.test(userId)) { toast("Telegram ID — только цифры", true); return; }
+      params.set("telegram_user_id", userId);
+    }
+    $("pay-reset").classList.toggle("hidden", !status && !userId);
+
+    const { payments } = await api(`/admin/payments?${params}`);
+    $("pay-count").textContent = payments.length ? `Показано: ${payments.length}` : "";
+
+    if (!payments.length) {
+      $("pay-body").replaceChildren(emptyRow(8, status || userId ? "По этому фильтру платежей нет" : "Платежей пока нет"));
+      return;
+    }
+
+    $("pay-body").replaceChildren(
+      ...payments.map((p) => {
+        const isManual = p.source === "admin";
+        const isPaid = p.status === "paid";
+        const user = userCell(p);
+        user.append(el("div", { class: "muted", text: `ID ${p.telegram_user_id}` }));
+
+        const action = el("td", { class: "actions" });
+        if (isPaid) {
+          action.append(
+            el("button", {
+              class: "btn btn-danger", type: "button",
+              text: isManual ? "Отозвать" : "Возврат",
+              on: { click: () => confirmRefund(p) },
+            })
+          );
+        } else {
+          action.append(el("span", { class: "muted", text: formatDate(p.refunded_at) }));
+        }
+
+        return el("tr", {}, [
+          el("td", { class: "muted", text: `#${p.id}` }),
+          el("td", { text: formatDate(p.created_at) }),
+          user,
+          el("td", { text: p.category_name || categoryName(p.category_id) }),
+          el("td", { class: "num", text: isManual ? "—" : `${p.amount} Stars` }),
+          el("td", {}, el("span", {
+            class: `badge ${isManual ? "badge-off" : "badge-plain"}`,
+            text: isManual ? "Вручную" : "Telegram Stars",
+          })),
+          el("td", {}, el("span", {
+            class: `badge ${isPaid ? "badge-ok" : "badge-refund"}`,
+            text: isPaid ? (isManual ? "Выдан" : "Оплачен") : (isManual ? "Отозван" : "Возвращён"),
+          })),
+          action,
+        ]);
+      })
+    );
+  }
+
+  function confirmRefund(p) {
+    const who = displayName(p);
+    const product = p.category_name || categoryName(p.category_id);
+    const isManual = p.source === "admin";
+    openModal({
+      title: isManual ? "Отозвать доступ?" : "Вернуть оплату?",
+      text: isManual
+        ? `Доступ «${product}», выданный вручную пользователю ${who}, будет отозван.`
+        : `${p.amount} Stars вернутся пользователю ${who} через Telegram, доступ «${product}» будет отозван. Отменить возврат нельзя.`,
+      confirmLabel: isManual ? "Отозвать" : "Вернуть Stars",
+      danger: true,
+      onConfirm: async () => {
+        await api(`/admin/payments/${p.id}/refund`, { method: "POST" });
+        toast(isManual ? "Доступ отозван" : "Возврат выполнен");
+        await Promise.all([loadPayments(), loadUsers(), loadOverview()]);
+      },
+    });
+  }
+
+  function showPaymentsOf(telegramUserId) {
+    $("pay-status").value = "";
+    $("pay-user").value = String(telegramUserId);
+    showTab("payments");
+    loadPayments().catch(handleError);
+  }
+
+  // ---------- пользователи ----------
+
+  function accessChips(u) {
+    const access = el("div", { class: "chips" });
+    if (u.entitlements.length) {
+      for (const e of u.entitlements) {
+        const label = categoryName(e.category_id) + (e.expires_at ? ` до ${formatDate(e.expires_at).slice(0, 10)}` : "");
+        access.append(el("span", { class: "badge badge-plain", text: label }));
+      }
+    } else {
+      access.append(el("span", { class: "muted", text: "нет" }));
+    }
+    return access;
+  }
+
+  async function loadUsers() {
+    const params = new URLSearchParams({ limit: "200" });
+    const search = $("user-search").value.trim();
+    if (search) params.set("search", search);
+    $("user-reset").classList.toggle("hidden", !search);
+
+    const { users } = await api(`/admin/users?${params}`);
+    if (!users.length) {
+      $("user-body").replaceChildren(emptyRow(7, search ? "Никого не нашлось" : "Пользователей пока нет"));
+      return;
+    }
+
+    $("user-body").replaceChildren(
+      ...users.map((u) =>
+        el("tr", {}, [
+          userCell(u),
+          el("td", { text: String(u.telegram_user_id) }),
+          el("td", { text: formatDate(u.last_seen_at || u.created_at) }),
+          el("td", {}, el("span", {
+            class: `badge ${u.has_profile ? "badge-ok" : "badge-off"}`,
+            text: u.has_profile ? "Сохранена" : "Нет",
+          })),
+          el("td", {}, accessChips(u)),
+          el("td", { class: "num", text: u.stars_paid ? `${u.stars_paid} Stars` : "—" }),
+          el("td", { class: "actions" }, el("button", {
+            class: "btn", type: "button", text: "Открыть",
+            on: { click: () => openUserCard(u.telegram_user_id) },
+          })),
+        ])
+      )
+    );
+  }
+
+  // Карточка пользователя: все сведения и действия в одном месте
+  async function openUserCard(telegramUserId) {
+    let user;
+    try {
+      const { users } = await api(`/admin/users?search=${encodeURIComponent(telegramUserId)}&limit=1`);
+      user = users[0];
+    } catch (err) { handleError(err); return; }
+    if (!user) { toast("Пользователь не найден", true); return; }
+
+    const row = (label, value) => el("div", { class: "card-row" }, [
+      el("span", { text: label }),
+      typeof value === "string" ? el("span", { text: value }) : value,
+    ]);
+
+    const actions = [
+      el("button", { class: "btn btn-primary", type: "button", text: "Выдать доступ", on: { click: () => openGrant(user) } }),
+      el("button", { class: "btn", type: "button", text: "Написать", on: { click: () => { closeModal(); openThread(user.telegram_user_id); } } }),
+      el("button", { class: "btn", type: "button", text: "Платежи", on: { click: () => { closeModal(); showPaymentsOf(user.telegram_user_id); } } }),
+      user.has_profile
+        ? el("button", { class: "btn btn-danger", type: "button", text: "Удалить карту", on: { click: () => confirmDeleteProfile(user) } })
+        : null,
+    ];
+
+    showModal(el("div", { class: "modal" }, [
+      el("h3", { text: user.first_name || "Без имени" }),
+      el("div", { class: "card-rows" }, [
+        row("Username", user.username ? `@${user.username}` : "нет"),
+        row("Telegram ID", String(user.telegram_user_id)),
+        row("Язык", user.language_code || "—"),
+        row("Первый вход", formatDate(user.created_at)),
+        row("Последний визит", formatDate(user.last_seen_at || user.created_at)),
+        row("Карта", user.has_profile ? "Сохранена" : "Нет"),
+        row("Оплачено", user.stars_paid ? `${user.stars_paid} Stars` : "—"),
+        row("Доступ", accessChips(user)),
+      ]),
+      el("div", { class: "card-actions" }, actions),
+      el("div", { class: "modal-actions" }, el("button", { class: "btn", type: "button", text: "Закрыть", on: { click: closeModal } })),
+    ]));
+  }
+
+  function confirmDeleteProfile(u) {
+    openModal({
+      title: "Удалить данные рождения?",
+      text: `Сохранённые дата, время, место рождения и карта пользователя ${displayName(u)} будут удалены. При следующем открытии приложение снова покажет ему онбординг. Покупки и подписка сохранятся.`,
+      confirmLabel: "Удалить",
+      danger: true,
+      onConfirm: async () => {
+        await api(`/admin/users/${u.telegram_user_id}/profile`, { method: "DELETE" });
+        toast("Данные рождения удалены");
+        await Promise.all([loadUsers(), loadOverview()]);
+      },
+    });
+  }
+
+  function openGrant(user) {
+    const idInput = el("input", {
+      class: "input", inputmode: "numeric", placeholder: "например, 123456789",
+      value: user ? String(user.telegram_user_id) : "",
+    });
+    if (user) idInput.setAttribute("readonly", "readonly");
+    const select = el("select", { class: "select" },
+      categories.map((c) => el("option", { value: c.id, text: `${c.name}${c.is_active ? "" : " (отключена)"}` }))
+    );
+
+    openModal({
+      title: "Выдать доступ",
+      text: user
+        ? `Бесплатно открыть раздел пользователю ${displayName(user)}. Подписка выдаётся на 30 дней.`
+        : "Бесплатно открыть раздел пользователю по его Telegram ID. Подписка выдаётся на 30 дней.",
+      fields: [
+        el("label", { text: "Telegram ID" }), idInput,
+        el("label", { text: "Что открыть" }), select,
+      ],
+      confirmLabel: "Выдать",
+      onConfirm: async () => {
+        const id = idInput.value.trim();
+        if (!/^\d+$/.test(id)) throw new Error("Telegram ID — только цифры");
+        await api("/admin/grant", {
+          method: "POST",
+          body: JSON.stringify({ telegram_user_id: Number(id), category_id: select.value }),
+        });
+        toast("Доступ выдан");
+        await Promise.all([loadUsers(), loadPayments(), loadOverview()]);
+      },
+    });
+  }
+
+  // ---------- поддержка ----------
+
+  async function loadThreads() {
+    const { threads } = await api("/admin/support");
+    if (!threads.length) {
+      $("thread-list").replaceChildren(el("div", { class: "empty", text: "Обращений пока нет" }));
+    } else {
+      $("thread-list").replaceChildren(
+        ...threads.map((t) => {
+          const unread = t.unread > 0 && t.telegram_user_id !== openThreadId;
+          return el("button", {
+            class: `thread-item${t.telegram_user_id === openThreadId ? " active" : ""}${unread ? " is-unread" : ""}`,
+            type: "button",
+            on: { click: () => openThread(t.telegram_user_id) },
+          }, [
+            el("div", { class: "thread-item-top" }, [
+              el("span", { class: "user-name", text: displayName(t) }),
+              unread ? el("span", { class: "count", text: String(t.unread) }) : el("span", { class: "muted", text: formatShort(t.last_at) }),
+            ]),
+            el("div", { class: "thread-preview", text: (t.last_direction === "out" ? "Вы: " : "") + t.last_text }),
+          ]);
+        })
+      );
+    }
+    if (openThreadId === null) renderThreadPlaceholder();
+    return threads;
+  }
+
+  function renderThreadPlaceholder() {
+    $("support").classList.remove("is-thread-open");
+    $("thread").replaceChildren(el("div", { class: "thread-placeholder", text: "Выберите обращение слева. Написать пользователю первым можно из его карточки." }));
+  }
+
+  function renderMessages(messages, forceBottom) {
+    const box = $("messages");
+    if (!box) return;
+    const nearBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 60;
+    box.replaceChildren(
+      ...(messages.length
+        ? messages.map((m) => el("div", { class: `msg ${m.direction === "out" ? "msg-out" : "msg-in"}` }, [
+            document.createTextNode(m.text),
+            el("time", { text: formatShort(m.created_at) }),
+          ]))
+        : [el("div", { class: "thread-placeholder", text: "Сообщений пока нет. Напишите первым — сообщение придёт пользователю от имени бота." })])
+    );
+    if (forceBottom || nearBottom) box.scrollTop = box.scrollHeight;
+  }
+
+  // Открывает переписку (и отмечает входящие прочитанными)
+  async function openThread(telegramUserId) {
+    showTab("support");
+    let data;
+    try {
+      data = await api(`/admin/support/${telegramUserId}`);
+    } catch (err) { handleError(err); return; }
+    openThreadId = telegramUserId;
+    $("support").classList.add("is-thread-open");
+
+    const textarea = el("textarea", { class: "textarea", rows: "1", maxlength: String(REPLY_MAX_LENGTH), placeholder: "Ответ пользователю…" });
+    const sendBtn = el("button", { class: "btn btn-primary", type: "submit", text: "Отправить" });
+    const form = el("form", { class: "reply" }, [textarea, sendBtn]);
+
+    const send = async () => {
+      const text = textarea.value.trim();
+      if (!text) return;
+      sendBtn.disabled = true;
+      try {
+        await api(`/admin/support/${telegramUserId}/reply`, { method: "POST", body: JSON.stringify({ text }) });
+        textarea.value = "";
+        await refreshThread(true);
+        await loadThreads();
+      } catch (err) {
+        handleError(err);
+      } finally {
+        sendBtn.disabled = false;
+        textarea.focus();
+      }
+    };
+    form.addEventListener("submit", (event) => { event.preventDefault(); send(); });
+    textarea.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && (event.ctrlKey || event.metaKey)) { event.preventDefault(); send(); }
+    });
+
+    $("thread").replaceChildren(
+      el("div", { class: "thread-head" }, [
+        el("button", { class: "btn thread-back", type: "button", text: "Назад", on: { click: () => { openThreadId = null; renderThreadPlaceholder(); loadThreads().catch(handleError); } } }),
+        el("div", { class: "who" }, [
+          el("div", { class: "user-name", text: data.user.first_name || "Без имени" }),
+          el("div", { class: "muted", text: `${data.user.username ? "@" + data.user.username + " · " : ""}ID ${data.user.telegram_user_id}` }),
+        ]),
+        el("button", { class: "btn", type: "button", text: "Карточка", on: { click: () => openUserCard(telegramUserId) } }),
+        el("button", { class: "btn btn-danger", type: "button", text: "Удалить", on: { click: () => confirmDeleteThread(data.user) } }),
+      ]),
+      el("div", { id: "messages", class: "messages" }),
+      form,
+      el("div", { class: "hint reply-hint", text: "Ответ придёт пользователю в чат с ботом. Ctrl+Enter — отправить." })
+    );
+    renderMessages(data.messages, true);
+    textarea.focus();
+    await Promise.all([loadThreads(), loadOverview()]).catch(handleError);
+  }
+
+  function confirmDeleteThread(user) {
+    openModal({
+      title: "Удалить переписку?",
+      text: `Все сообщения переписки с пользователем ${displayName(user)} будут удалены без возможности восстановления. Сам пользователь, его покупки и карта останутся.`,
+      confirmLabel: "Удалить переписку",
+      danger: true,
+      onConfirm: async () => {
+        await api(`/admin/support/${user.telegram_user_id}`, { method: "DELETE" });
+        openThreadId = null;
+        renderThreadPlaceholder();
+        toast("Переписка удалена");
+        await Promise.all([loadThreads(), loadOverview()]);
+      },
+    });
+  }
+
+  // Массовая очистка: переписки, где давно не было сообщений
+  function openCleanup() {
+    const select = el("select", { class: "select" }, [
+      el("option", { value: "30", text: "30 дней" }),
+      el("option", { value: "90", text: "90 дней" }),
+      el("option", { value: "180", text: "180 дней" }),
+    ]);
+    select.value = "90";
+    openModal({
+      title: "Очистить старые переписки",
+      text: "Будут удалены переписки, в которых не было новых сообщений дольше выбранного срока. Активные переписки не затрагиваются. Восстановить удалённое нельзя.",
+      fields: [el("label", { text: "Без сообщений дольше" }), select],
+      confirmLabel: "Удалить старые",
+      danger: true,
+      onConfirm: async () => {
+        const result = await api(`/admin/support?older_than_days=${select.value}`, { method: "DELETE" });
+        toast(result.threads
+          ? `Удалено переписок: ${result.threads} (сообщений: ${result.messages})`
+          : "Старых переписок нет — удалять нечего");
+        const [threads] = await Promise.all([loadThreads(), loadOverview()]);
+        // Открытая переписка попала под очистку — закрываем её
+        if (openThreadId !== null && !threads.some((t) => t.telegram_user_id === openThreadId)) {
+          openThreadId = null;
+          renderThreadPlaceholder();
+        }
+      },
+    });
+  }
+
+  async function refreshThread(forceBottom = false) {
+    if (openThreadId === null) return;
+    const data = await api(`/admin/support/${openThreadId}`);
+    renderMessages(data.messages, forceBottom);
+  }
+
+  // ---------- категории ----------
+
+  async function loadCategories() {
+    const data = await api("/admin/categories");
+    categories = data.categories;
+  }
+
+  function renderCategories() {
+    if (!categories.length) {
+      $("cat-body").replaceChildren(emptyRow(5, "Категорий нет"));
+      return;
+    }
+    $("cat-body").replaceChildren(
+      ...categories.map((c) => {
+        const price = el("input", { class: "input price-input", type: "number", min: "1", step: "1", value: String(c.price_stars ?? "") });
+        const active = el("input", { type: "checkbox" });
+        active.checked = Boolean(c.is_active);
+        const save = el("button", { class: "btn", type: "button", text: "Сохранить" });
+
+        save.addEventListener("click", async () => {
+          const value = Number(price.value);
+          if (!Number.isInteger(value) || value < 1) { toast("Цена — целое число от 1", true); return; }
+          save.disabled = true;
+          try {
+            await api(`/admin/categories/${encodeURIComponent(c.id)}`, {
+              method: "PATCH",
+              body: JSON.stringify({ price_stars: value, is_active: active.checked }),
+            });
+            toast(`«${c.name}» сохранена`);
+            await loadCategories();
+            renderCategories();
+          } catch (err) {
+            handleError(err);
+          } finally {
+            save.disabled = false;
+          }
+        });
+
+        return el("tr", {}, [
+          el("td", {}, [
+            el("div", { class: "user-name", text: c.name }),
+            el("div", { class: "muted", text: c.description || "" }),
+          ]),
+          el("td", { class: "muted", text: c.id }),
+          el("td", { class: "num" }, price),
+          el("td", {}, active),
+          el("td", { class: "actions" }, save),
+        ]);
+      })
+    );
+  }
+
+  // ---------- вкладки и обновление данных ----------
+
+  function showTab(name) {
+    activeTab = name;
+    for (const tab of document.querySelectorAll(".tab")) tab.classList.toggle("active", tab.dataset.tab === name);
+    for (const id of TABS) $(`tab-${id}`).classList.toggle("hidden", id !== name);
+  }
+
+  async function loadAll() {
+    await loadCategories();
+    renderCategories();
+    await Promise.all([loadOverview(), loadPayments(), loadUsers(), loadThreads()]);
+    await refreshThread();
+    markUpdated();
+  }
+
+  // Фоновое обновление: сводка и открытая вкладка (поля ввода категорий не трогаем)
+  async function autoRefresh() {
+    if (!token || document.hidden || isModalOpen()) return;
+    if (checkIdle()) return;
+    try {
+      const jobs = [loadOverview()];
+      if (activeTab === "payments") jobs.push(loadPayments());
+      if (activeTab === "users") jobs.push(loadUsers());
+      if (activeTab === "support") jobs.push(loadThreads(), refreshThread());
+      await Promise.all(jobs);
+      markUpdated();
+    } catch (err) {
+      if (err.status === 401) handleError(err);
+    }
+  }
+
+  // ---------- вход, выход, автовыход ----------
+
+  function touchActivity() {
+    const now = Date.now();
+    if (now - lastActivity < 5000) return;
+    lastActivity = now;
+    sessionStorage.setItem(ACTIVITY_KEY, String(now));
+  }
+
+  // true — сессия истекла и завершена
+  function checkIdle() {
+    if (!token) return false;
+    if (Date.now() - lastActivity <= IDLE_LIMIT_MS) return false;
+    logout("Сессия завершена: 30 минут без действий. Войдите заново.");
+    return true;
+  }
+
+  function logout(message = "") {
+    token = "";
+    openThreadId = null;
+    sessionStorage.removeItem(TOKEN_KEY);
+    sessionStorage.removeItem(ACTIVITY_KEY);
+    closeModal();
+    $("app").classList.add("hidden");
+    $("login").classList.remove("hidden");
+    $("login-error").textContent = message;
+    $("token-input").value = "";
+    $("token-input").focus();
+    // убираем данные со страницы
+    for (const id of ["stats", "pay-body", "user-body", "cat-body", "thread-list", "thread"]) $(id).replaceChildren();
+  }
+
+  async function enter() {
+    await loadAll();
+    $("login").classList.add("hidden");
+    $("app").classList.remove("hidden");
+  }
+
+  $("login-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    token = $("token-input").value.trim();
+    $("login-error").textContent = "";
+    try {
+      await enter();
+      sessionStorage.setItem(TOKEN_KEY, token);
+      lastActivity = Date.now();
+      sessionStorage.setItem(ACTIVITY_KEY, String(lastActivity));
+    } catch (err) {
+      token = "";
+      $("login-error").textContent = err.status === 401 ? "Неверный токен." : (err.message || "Не удалось войти");
+    }
+  });
+
+  $("logout-btn").addEventListener("click", () => window.location.reload()); // ДЕМО: сброс данных
+  $("refresh-btn").addEventListener("click", () => loadAll().then(() => toast("Данные обновлены")).catch(handleError));
+
+  $("pay-apply").addEventListener("click", () => loadPayments().catch(handleError));
+  $("pay-status").addEventListener("change", () => loadPayments().catch(handleError));
+  $("pay-user").addEventListener("keydown", (e) => { if (e.key === "Enter") loadPayments().catch(handleError); });
+  $("pay-reset").addEventListener("click", () => { $("pay-status").value = ""; $("pay-user").value = ""; loadPayments().catch(handleError); });
+
+  $("user-apply").addEventListener("click", () => loadUsers().catch(handleError));
+  $("user-search").addEventListener("keydown", (e) => { if (e.key === "Enter") loadUsers().catch(handleError); });
+  $("user-reset").addEventListener("click", () => { $("user-search").value = ""; loadUsers().catch(handleError); });
+  $("grant-open").addEventListener("click", () => openGrant(null));
+  $("cleanup-open").addEventListener("click", openCleanup);
+
+  for (const tab of document.querySelectorAll(".tab")) {
+    tab.addEventListener("click", () => {
+      showTab(tab.dataset.tab);
+      if (tab.dataset.tab === "support") loadThreads().catch(handleError);
+    });
+  }
+
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+  for (const evt of ["click", "keydown", "mousemove", "scroll", "touchstart"]) {
+    document.addEventListener(evt, touchActivity, { passive: true, capture: true });
+  }
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) checkIdle(); });
+  setInterval(checkIdle, 15 * 1000);
+  setInterval(autoRefresh, AUTO_REFRESH_MS);
+
+  showTab(activeTab);
+  if (token) {
+    if (!checkIdle()) enter().catch(() => logout());
+  } else {
+    $("token-input").focus();
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { BOT_URL } from "./config";
+import { BOT_URL, ADMIN_DEMO_URL, TIKTOK_URL } from "./config";
 import { resetDemo } from "./reset";
 import LangSwitch from "./LangSwitch";
 import { t } from "../i18n";
@@ -94,7 +94,35 @@ export default function DemoShell() {
             <button type="button" className="demo-btn demo-btn-ghost" onClick={restart}>
               {t("Начать заново")}
             </button>
+            {TIKTOK_URL && (
+              <a
+                className="demo-text-link"
+                href={TIKTOK_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                TikTok ↗
+              </a>
+            )}
           </div>
+
+          {/* Вторая сторона продукта: панель владельца */}
+          <a
+            className="demo-admin-card"
+            href={ADMIN_DEMO_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="demo-admin-body">
+              <span className="demo-admin-label">{t("Админ-панель владельца")}</span>
+              <span className="demo-admin-text">
+                {t(
+                  "Платежи, пользователи, поддержка и цены — на вымышленных данных, без пароля."
+                )}
+              </span>
+            </span>
+            <span className="demo-admin-cta">{t("Открыть демо ↗")}</span>
+          </a>
 
           <div className="demo-block">
             <h2>{t("Что здесь показано")}</h2>
