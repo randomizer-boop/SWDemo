@@ -1,0 +1,29 @@
+{
+  "_meta": {
+    "note": "Верх бесплатного экрана и формула. Плейсхолдеры в фигурных скобках подставляет код из signs.json: {asc.keyword} = signs.Asc[знак].formulaKeyword, {asc.sign_genitive} = nameGenitive, {asc.formula_line} = formulaLine, {asc.sign} = name, {asc.tagline} = shortTagline."
+  },
+  "title": "Кто ты",
+  "eyebrow": "Бесплатный портрет",
+  "subtitle": "Портрет по трём точкам — Асцендент, Солнце и Луна. Читай и отмечай, где узнаёшь себя.",
+  "subtitleNoTime": "Короткий, но узнаваемый портрет по двум точкам — Солнце и Луна. Асцендент появится, когда добавишь время рождения.",
+  "formulaTitle": "Твоя формула",
+  "formulaIntro": "Твоя особенность — в сочетании, которое не всегда очевидно окружающим: {asc.keyword} {asc.sign_genitive}, {sun.keyword} {sun.sign_genitive} и {moon.keyword} {moon.sign_genitive}.",
+  "formulaLines": "{asc.formula_line} {sun.formula_line} {moon.formula_line}",
+  "formulaFallbackNoTime": "Вот как это складывается: {sun_keyword} {sun_sign_genitive} в характере и {moon_keyword} {moon_sign_genitive} в чувствах.",
+  "headerLine": "↑ ASC {asc.sign} · ☉ Солнце {sun.sign} · ☽ Луна {moon.sign}",
+  "taglineLine": "{asc.tagline}. {sun.tagline}. {moon.tagline}.",
+  "cardOrder": [
+    "Asc",
+    "Sun",
+    "Moon"
+  ],
+  "homeTeaser": {
+    "title": "Твой портрет по трём точкам",
+    "description": "Короткий, но узнаваемый разбор личности — на основе Солнца, Луны и Асцендента.",
+    "button": "Смотреть разбор"
+  },
+  "homeTeaserNoTime": {
+    "title": "Твой портрет по двум точкам",
+    "description": "Короткий, но узнаваемый разбор на основе Солнца и Луны. Добавь время рождения — появится и третья точка, Асцендент."
+  }
+}

@@ -1,0 +1,564 @@
+/* Платный разбор и прогноз: общие карточки */
+
+.rv {
+  --el-air: #5aa9d6;
+  --el-earth: #5c9e6e;
+  --el-water: #2f4f8f;
+  --el-fire: #d1435b;
+  --tone-soft: #5c9e6e;
+  --tone-hard: #d1435b;
+  --tone-neutral: var(--lavender);
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ===== card ===== */
+
+.rv-card {
+  background: var(--card);
+  border-radius: var(--radius-md);
+  padding: 18px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  box-shadow: 0 8px 22px rgba(128, 101, 199, 0.08);
+}
+
+.rv-card-formula {
+  background: linear-gradient(150deg, #ffffff 0%, var(--bg-lilac) 100%);
+}
+
+.rv-card-feature {
+  background: linear-gradient(150deg, #ffffff 0%, var(--bg-rose) 100%);
+  border: 1px solid rgba(128, 101, 199, 0.14);
+}
+
+.rv-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  color: var(--lavender);
+}
+
+.rv-card-title {
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.rv-formula {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.rv-intro,
+.rv-note {
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.rv-body,
+.rv-paragraphs p {
+  color: var(--ink);
+  font-size: 14.5px;
+  line-height: 1.7;
+}
+
+.rv-paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ===== tabs ===== */
+
+.rv-tabs {
+  display: flex;
+  gap: 8px;
+
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  margin: 0 -18px;
+  padding: 2px 18px 4px;
+}
+
+.rv-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.rv-tab {
+  flex-shrink: 0;
+
+  min-height: 36px;
+  padding: 8px 15px;
+
+  border: none;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--ink-soft);
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.rv-tab.is-active {
+  background: var(--lavender);
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(128, 101, 199, 0.24);
+}
+
+/* ===== point ===== */
+
+.rv-point {
+  animation: rv-fade 260ms ease;
+}
+
+@keyframes rv-fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rv-point-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.rv-role {
+  display: block;
+
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-soft);
+
+  margin-bottom: 2px;
+}
+
+.rv-point-title {
+  font-size: 22px;
+}
+
+.rv-position {
+  flex-shrink: 0;
+
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--lavender);
+
+  white-space: nowrap;
+}
+
+.rv-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.rv-chip {
+  padding: 4px 10px;
+  border-radius: 999px;
+
+  background: var(--field-bg);
+  color: var(--ink-soft);
+
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.rv-chip-air {
+  background: #e3f1f9;
+  color: #2f7aa6;
+}
+
+.rv-chip-earth {
+  background: #e4f1e7;
+  color: #3f7a50;
+}
+
+.rv-chip-water {
+  background: #e3e9f5;
+  color: var(--el-water);
+}
+
+.rv-chip-fire {
+  background: #f9e3e7;
+  color: #b2324a;
+}
+
+.rv-divider {
+  height: 1px;
+  background: var(--field-bg);
+  margin: 4px 0 0;
+}
+
+.rv-subhead {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* ===== aspects ===== */
+
+.rv-aspects {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rv-aspect {
+  background: var(--field-bg);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rv-aspect-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rv-aspect-dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--tone-neutral);
+}
+
+.rv-tone-soft .rv-aspect-dot {
+  background: var(--tone-soft);
+}
+
+.rv-tone-hard .rv-aspect-dot {
+  background: var(--tone-hard);
+}
+
+.rv-aspect-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.rv-aspect-orb {
+  margin-left: auto;
+
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+
+  white-space: nowrap;
+}
+
+.rv-aspect p {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+/* ===== elements ===== */
+
+.rv-elements {
+  list-style: none;
+  margin: 2px 0 4px;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rv-el {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rv-el-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.rv-el-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--field-bg);
+  overflow: hidden;
+}
+
+.rv-el-bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.rv-el-air .rv-el-bar span {
+  background: var(--el-air);
+}
+
+.rv-el-earth .rv-el-bar span {
+  background: var(--el-earth);
+}
+
+.rv-el-water .rv-el-bar span {
+  background: var(--el-water);
+}
+
+.rv-el-fire .rv-el-bar span {
+  background: var(--el-fire);
+}
+
+.rv-el-fire .rv-el-count {
+  color: var(--el-fire);
+}
+
+.rv-el-points {
+  font-size: 11.5px;
+  color: var(--ink-soft);
+}
+
+/* ===== forecast ===== */
+
+.rv-transit-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.rv-time {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--field-bg);
+
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.rv-transit-planet {
+  font-size: 17px;
+}
+
+.rv-transit-aspect {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.rv-transit-aspect .rv-aspect-orb {
+  margin-left: 0;
+}
+
+.rv-tarot-text {
+  margin-top: 4px;
+}
+
+.rv-advice {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+/* ===== template v2 ===== */
+
+.rv-card-key {
+  border: 1px solid rgba(209, 67, 91, 0.18);
+}
+
+.rv-section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  margin: 4px 0 -4px;
+
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lavender);
+}
+
+.rv-indicators,
+.rv-extras {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.rv-indicators li,
+.rv-extras li {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  padding: 10px 0;
+  border-top: 1px solid var(--field-bg);
+}
+
+.rv-indicators li:first-child,
+.rv-extras li:first-child {
+  border-top: none;
+  padding-top: 2px;
+}
+
+.rv-indicators p,
+.rv-extras p {
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.rv-extras p {
+  color: var(--ink);
+}
+
+.rv-ind-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rv-ind-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.rv-ind-pos {
+  margin-left: auto;
+
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--lavender);
+  white-space: nowrap;
+}
+
+.rv-theme-title {
+  font-size: 21px;
+}
+
+.rv-basis {
+  align-self: flex-start;
+
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--field-bg);
+
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.rv-key-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.rv-key-head .rv-aspect-orb {
+  margin-left: 0;
+}
+
+.rv-scheme {
+  background: var(--field-bg);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rv-scheme-large {
+  background: transparent;
+  padding: 0;
+}
+
+.rv-scheme-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rv-scheme-steps li {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  padding-left: 12px;
+  border-left: 2px solid var(--lavender-soft);
+}
+
+.rv-scheme-steps li:last-child {
+  border-left-color: var(--lavender);
+}
+
+.rv-scheme-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.rv-scheme-steps p {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.rv-scheme-large .rv-scheme-steps p {
+  font-size: 14.5px;
+  line-height: 1.65;
+}

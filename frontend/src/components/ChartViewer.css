@@ -1,0 +1,159 @@
+/* Натальная карта на весь экран (components/ChartViewer.jsx) */
+
+.cv-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: calc(14px + var(--safe-top)) 0 calc(18px + var(--safe-bottom));
+
+  background: #f8f5fc;
+  color: var(--ink);
+
+  animation: cv-in 220ms ease both;
+}
+
+@keyframes cv-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.cv-bar {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  padding: 0 16px 8px;
+}
+
+.cv-title {
+  font-size: 19px;
+  text-align: center;
+}
+
+.cv-bar-spacer {
+  width: 44px;
+  flex-shrink: 0;
+}
+
+.cv-round {
+  flex-shrink: 0;
+
+  width: 44px;
+  height: 44px;
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--ink);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+
+  box-shadow: 0 6px 16px rgba(128, 101, 199, 0.14);
+  cursor: pointer;
+}
+
+.cv-round:disabled {
+  color: var(--ink-faint);
+  box-shadow: none;
+  cursor: default;
+}
+
+/* Область с колесом: при увеличении прокручивается в обе стороны.
+   Щипок обрабатывает ChartViewer, прокрутку одним пальцем — браузер */
+.cv-stage {
+  flex: 1 1 auto;
+  min-height: 0;
+
+  display: flex;
+
+  overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
+}
+
+/* margin: auto — по центру, пока колесо меньше области, и без обрезки, когда больше */
+.cv-wheel {
+  flex-shrink: 0;
+  margin: auto;
+  padding: 8px;
+  box-sizing: content-box;
+}
+
+.cv-bottom {
+  flex-shrink: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  padding: 10px 16px 0;
+}
+
+.cv-zoom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cv-hint {
+  font-size: 12.5px;
+  text-align: center;
+  color: var(--ink-soft);
+}
+
+.cv-big-three {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.cv-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 8px 12px;
+  border-radius: 999px;
+
+  background: var(--card);
+  box-shadow: 0 4px 12px rgba(128, 101, 199, 0.08);
+}
+
+.cv-chip-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lavender);
+}
+
+.cv-chip-value {
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cv-overlay {
+    animation: none;
+  }
+}

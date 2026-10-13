@@ -1,0 +1,662 @@
+/* Бесплатный экран «Кто ты». Общая шапка (кнопка «назад», заголовок,
+   подзаголовок) — из CategoryScreen.css. */
+
+.screen-wya {
+  /* Отступ, чтобы при переходе по «Дальше» вкладки не прилипали к краю */
+  --wya-scroll-offset: calc(14px + var(--safe-top));
+}
+
+/* Цвет стихии знака: воздух — небесно-голубой, земля — зелёный,
+   вода — тёмно-синий, огонь — красный.
+   --el-bg — фон плашки, --el-accent — значок и рамка, --el-ink — текст */
+
+.screen-wya [data-element="fire"] {
+  --el-bg: #fde5e1;
+  --el-accent: #e0554a;
+  --el-ink: #b5372d;
+}
+
+.screen-wya [data-element="earth"] {
+  --el-bg: #e6f0e8;
+  --el-accent: #5b9a79;
+  --el-ink: #3c7a59;
+}
+
+.screen-wya [data-element="air"] {
+  --el-bg: #e1f3fd;
+  --el-accent: #45ace6;
+  --el-ink: #1a73a8;
+}
+
+.screen-wya [data-element="water"] {
+  --el-bg: #dae2f6;
+  --el-accent: #33469a;
+  --el-ink: #2a3a80;
+}
+
+/* ===== шапка ===== */
+
+.wya-eyebrow-pill {
+  align-self: flex-start;
+
+  margin-top: 4px;
+  padding: 5px 11px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--lavender);
+
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.wya-title {
+  margin-top: -2px;
+
+  font-size: clamp(40px, 11.5vw, 46px);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.wya-title-rule {
+  width: 46px;
+  height: 3px;
+  margin-top: -2px;
+  border-radius: 3px;
+
+  background: linear-gradient(90deg, #8065c7, #e3b6d6);
+}
+
+.wya-subtitle {
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+.wya-subtitle b {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* ===== формула ===== */
+
+.wya-formula {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  padding: 18px;
+  border-radius: var(--radius-md);
+
+  background: linear-gradient(120deg, #8d70d4 0%, #b094de 55%, #e3b6d6 100%);
+
+  box-shadow: 0 12px 26px rgba(128, 101, 199, 0.2);
+}
+
+.wya-formula-label {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.wya-formula-headline {
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.wya-formula-text {
+  color: rgba(255, 255, 255, 0.94);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* ===== режим «без времени рождения» ===== */
+
+.wya-banner {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  padding: 14px 16px;
+  border: 1.5px dashed var(--lavender-soft);
+  border-radius: var(--radius-md);
+
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.wya-banner p {
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* ===== вкладки ===== */
+
+.wya-tabs {
+  display: grid;
+  grid-template-columns: repeat(var(--wya-tab-count, 3), minmax(0, 1fr));
+  gap: 8px;
+
+  scroll-margin-top: var(--wya-scroll-offset);
+}
+
+.wya-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+
+  min-width: 0;
+  padding: 10px 6px 11px;
+
+  border: 1.5px solid transparent;
+  border-radius: 18px;
+
+  background: var(--el-bg);
+  color: var(--ink);
+
+  cursor: pointer;
+
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.wya-tab.is-active {
+  border-color: var(--el-accent);
+  background: var(--card);
+  box-shadow: 0 8px 18px rgba(128, 101, 199, 0.1);
+}
+
+.wya-tab-glyph {
+  color: var(--el-accent);
+}
+
+.wya-tab-label {
+  margin-top: 2px;
+
+  color: var(--ink-soft);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.wya-tab-sign {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+/* ===== карточка точки ===== */
+
+.wya-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  padding: 18px;
+  border-top: 3px solid var(--el-accent);
+  border-radius: 22px;
+
+  background: var(--card);
+  box-shadow: 0 8px 22px rgba(128, 101, 199, 0.08);
+
+  animation: wya-card-in 260ms ease both;
+}
+
+@keyframes wya-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.wya-card-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wya-card-icon {
+  flex-shrink: 0;
+
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--el-bg);
+  color: var(--el-ink);
+}
+
+.wya-eyebrow {
+  display: block;
+
+  color: var(--el-ink);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.wya-card-title {
+  margin-top: 2px;
+  font-size: 19px;
+  line-height: 1.25;
+}
+
+.wya-stats {
+  display: flex;
+  margin: 0;
+  padding: 10px 4px;
+  border-radius: var(--radius-sm);
+
+  background: var(--field-bg);
+}
+
+.wya-stat {
+  flex: 1 1 0;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.wya-stat + .wya-stat {
+  border-left: 1px solid rgba(128, 101, 199, 0.14);
+}
+
+.wya-stat dt {
+  color: var(--ink-soft);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.wya-stat dd {
+  margin: 0;
+
+  color: var(--ink);
+  font-size: 14.5px;
+  font-weight: 700;
+}
+
+.wya-tagline {
+  padding-left: 11px;
+  border-left: 3px solid var(--el-accent);
+
+  font-size: 17px;
+  line-height: 1.3;
+}
+
+.wya-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wya-chips li {
+  padding: 4px 11px;
+  border-radius: 999px;
+
+  background: var(--el-bg);
+  color: var(--el-ink);
+
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.wya-text {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.wya-text p {
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+/* Пояснение: одинаковые/противоположные знаки, Луна без времени рождения */
+
+.wya-note {
+  padding: 10px 12px;
+  border-radius: 12px;
+
+  background: var(--field-bg);
+  color: var(--ink);
+
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* ===== сила / зона внимания ===== */
+
+.wya-duo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.wya-duo-box {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  padding: 11px 12px;
+  border-radius: var(--radius-sm);
+}
+
+.wya-duo-box p {
+  color: var(--ink);
+  font-size: 12.5px;
+  line-height: 1.5;
+
+  /* Длинное слово не должно вылезать из узкой колонки */
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.wya-duo-label {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.wya-strength {
+  background: #e6f0e8;
+}
+
+.wya-strength .wya-duo-label {
+  color: #3c7a59;
+}
+
+.wya-watch {
+  background: #fbedd9;
+}
+
+.wya-watch .wya-duo-label {
+  color: #a2621d;
+}
+
+/* ===== кнопка-пилюля («Дальше», «Открыть…») ===== */
+
+.wya-pill-button {
+  width: 100%;
+  min-height: 44px;
+  padding: 11px 16px;
+
+  border: none;
+  border-radius: 999px;
+
+  background: #f3effb;
+  color: var(--lavender);
+
+  font-size: 13.5px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: background 160ms ease;
+}
+
+.wya-pill-button:active {
+  background: var(--lavender-soft);
+}
+
+/* После последней карточки — приглашение в «Личность» */
+
+.wya-after {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  padding-top: 14px;
+  border-top: 1px solid rgba(128, 101, 199, 0.12);
+}
+
+.wya-after h3 {
+  font-size: 16px;
+}
+
+.wya-after p {
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.wya-after .wya-pill-button {
+  margin-top: 4px;
+}
+
+/* ===== «Как это складывается» ===== */
+
+.wya-blend {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  padding: 18px;
+  border-radius: 22px;
+
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow: 0 8px 22px rgba(128, 101, 199, 0.06);
+}
+
+.wya-blend-title {
+  font-size: 18px;
+}
+
+.wya-blend-title span {
+  color: var(--lavender);
+}
+
+.wya-blend-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wya-blend-rows li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2px 10px;
+
+  padding: 8px 12px 9px 11px;
+  border-left: 3px solid var(--el-accent);
+  border-radius: 12px;
+
+  background: var(--el-bg);
+}
+
+.wya-blend-label {
+  color: var(--el-ink);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.wya-blend-sign {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.wya-blend-phrase {
+  grid-column: 1 / -1;
+
+  color: var(--ink);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+.wya-blend-text {
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+/* «Особенность карты» */
+
+.wya-feature {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  padding: 13px 14px;
+  border: 1.5px dashed var(--lavender-soft);
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.wya-feature-label {
+  color: var(--lavender);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.wya-feature-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+}
+
+/* Подпись точности: «точная связь» и т.п. */
+.wya-feature-accuracy {
+  padding: 2px 8px;
+  border-radius: 999px;
+
+  background: #f3effb;
+
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.wya-feature .wya-feature-where {
+  color: var(--ink-soft);
+  font-size: 12.5px;
+}
+
+.wya-feature strong {
+  color: var(--ink);
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.wya-feature p {
+  color: var(--ink);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+/* ===== замок «Личность» ===== */
+
+.wya-locked {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  width: 100%;
+  padding: 15px 16px;
+
+  border: 1.5px dashed var(--lavender-soft);
+  border-radius: var(--radius-md);
+
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--ink);
+
+  text-align: left;
+  cursor: pointer;
+}
+
+.wya-locked-body {
+  flex: 1 1 auto;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.wya-locked-body strong {
+  font-size: 14.5px;
+  font-weight: 700;
+}
+
+.wya-locked-body span {
+  color: var(--lavender);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.wya-locked-icon {
+  flex-shrink: 0;
+  font-size: 18px;
+  color: var(--lavender);
+}
+
+/* Узкие экраны */
+
+@media (max-width: 359px) {
+  .wya-formula-headline {
+    font-size: 18px;
+  }
+
+  .wya-tab-sign {
+    font-size: 12.5px;
+  }
+
+  /* «Сила» и «Зона внимания» — друг под другом */
+  .wya-duo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wya-card {
+    animation: none;
+  }
+}

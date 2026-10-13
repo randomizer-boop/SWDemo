@@ -1,0 +1,10 @@
+# Зависимости бэкенда (api.py) и Telegram-бота (bot.py)
+
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2.6
+pyswisseph>=2.10
+timezonefinder>=6.5
+geopy>=2.4
+aiogram>=3.4
+psycopg2-binary>=2.9
